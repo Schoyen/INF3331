@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#ruter_data=$(curl --request GET "https://reisapi.ruter.no/place/getstopsruter")
+#ruter_stops=$(curl --request GET "https://reisapi.ruter.no/place/getstopsruter" > test.json)
 ruter_stops=$(<test.json)
 
-id_stations=${ruter_stops%%Forskningsparken \[T-bane\]*}
+id_stations=${ruter_stops%,\"Name\":\"Forskningsparken \[T\-bane\]*}
+id_stations=${id_stations##*\"ID\":}
 echo $id_stations
 
 #if [ $# -eq 0 ]; then
