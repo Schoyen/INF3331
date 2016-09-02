@@ -1,30 +1,45 @@
 #!/bin/bash
 
-#ruter_stops=$(curl --request GET "https://reisapi.ruter.no/place/getstopsruter" > test.json)
-ruter_stops=$(<test.json)
+ruter_stops=$(curl --request GET "https://reisapi.ruter.no/place/getstopsruter")
+#ruter_stops=$(<test.json)
+direction=0
 
+id_stations=${ruter_stops%,\"Name\":\"Forskningsparken \[T\-bane\]*}
+id_stations=${id_stations##*\"ID\":}
 
-if [ $# -eq 0 ]; then
-    id_stations=${ruter_stops%,\"Name\":\"Forskningsparken \[T\-bane\]*}
-    id_stations=${id_stations##*\"ID\":}
-    #ID_station=$(echo $ruter_data | grep -E -so '.{0,16}Forskningsparken \[T-bane\].' | cut -c -7)
+if [ "$1" == "--E" ]; then
+    direction=1
+    shift
+elif [ "$1" == "--W" ]; then
+    direction=2
+    shift
 fi
 
 
 if [ "$1" == "Blindern" ]; then
     id_stations=${ruter_stops%,\"Name\":\"Blindern \[T\-bane\]*}
     id_stations=${id_stations##*\"ID\":}
-    #ID_station=$(echo $ruter_data | grep -E -so '.{0,16}Blindern \[T-bane\].' | cut -c -7)
 elif [ "$1" == "Ullevål stadion" ]; then
     id_stations=${ruter_stops%,\"Name\":\"Ullevål stadion \[T\-bane\]*}
     id_stations=${id_stations##*\"ID\":}
-    #ID_station=$(echo $ruter_data | grep -E -so '.{0,16}Ullevål stadion \[T-bane\].' | cut -c -7)
 fi
 
-#echo $id_stations
-#station_data=$(curl --request GET "https://reisapi.ruter.no/stopvisit/getdepartures/$id_stations" > stations.json)
-station_data=$(<stations.json)
-departure_time=${blindern_data#*ExpectedDepartureTime}
-#blindern_departure_time=${blindern_departure_time#*T}
-#blindern_departure_time=${blindern_departure_time%%+*}
-#echo $blindern_departure_time
+station_data=$(curl --request GET "https://reisapi.ruter.no/stopvisit/getdepartures/$id_stations")
+#station_data=$(<stations.json)
+clear
+
+for i in 1 2 3 4 5 6; do
+
+    published_line_name=${station_data#*\"PublishedLineName\":\"}
+    station_data=$published_line_name
+    direction_name=${published_line_name#*\"DirectionName\":\"}
+    destination_name=${direction_name#*\"DestinationName\":\"}
+    expected_departure_time=${destination_name#*\"ExpectedDepartureTime\":\"*T}
+    expected_departure_time=${expected_departure_time%%+*}
+    destination_name=${destination_name%%\",*}
+    direction_name=${direction_name%%\",*}
+    published_line_name=${published_line_name%%\",*}
+
+    echo "$published_line_name: $destination_name ($direction_name) @ $expected_departure_time"
+
+done
