@@ -8,11 +8,8 @@ fi
 operator=$1; # First argument is the operator
 shift; # Get the next argument
 
-if [ $operator == "P" ]; then # Check if <operator> is product
-    temp=1; # Set temp to 1 to prevent all answers from being 0
-else
-    temp=0; # Set temp to 0
-fi
+temp=$1;
+shift;
 
 while [ $# -gt 0 ] # Loop while there are more command line arguments
 do
