@@ -1,3 +1,4 @@
 scratch_files/*
 assignment_texts/*
 *.swp
+*/__pycache__/*
