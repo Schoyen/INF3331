@@ -5,7 +5,7 @@ class UnitTest(object):
             self.func = func
         else:
             print ("[DEBUG] In %s UnitTest.__init__: Parameter func is not callable. Treating as a callable constant" % __name__)
-            self.func = lambda a, b, num_rechecks=2: func # TODO: Check if number of arguments in lambda can be arbitrary
+            self.func = lambda a, b, num_rechecks=2: func
 
         self.args = args
         self.kwargs = kwargs
