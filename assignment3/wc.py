@@ -9,13 +9,12 @@ class WordCount:
         self.char_counter = []
 
     def __call__(self):
-        valid_files = False
+        valid_files = (True if len(self.filename) > 1 else False)
         for fn in self.filename:
             try:
                 with open(fn, 'r') as f:
                     self._count_bytes(f)
                     print ("%8d%8d%8d %s" % (self.line_counter[-1], self.word_counter[-1], self.char_counter[-1], fn))
-                    valid_files = True
 
             except FileNotFoundError:
                 print ("wc.py: %s: No such file or directory" % fn)
