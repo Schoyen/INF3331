@@ -17,7 +17,10 @@ class WordCount:
                     print ("%8d%8d%8d %s" % (self.line_counter[-1], self.word_counter[-1], self.char_counter[-1], fn))
 
             except FileNotFoundError:
-                print ("wc.py: %s: No such file or directory" % fn)
+                print ("wc.py: %s: No such file" % fn)
+
+            except IsADirectoryError:
+                print ("wc.py: %s: Is a directory" % fn)
 
         if valid_files:
             print ("%8d%8d%8d %s" % (sum(self.line_counter), sum(self.word_counter), sum(self.char_counter), "total"))
