@@ -1,46 +1,48 @@
 class UnitTest(object):
-    """
-    Class UnitTest implementing a small testing framework for functions.
+    """Class UnitTest implementing a small testing framework for functions.
+
+    This class contains functions for testing the return value of external function
+    with arbitrary arguments and keyword arguments.
+
+    Attributes:
+        func: A callable function.
+        args: An argument or an argument list.
+        kwargs: A dictionary of optional keyword arguments. The key in the dictionary
+            should correspond to the name of the optional keyword argument in func.
+        res: An expected result from callind func with args and kwargs.
     """
 
     def __init__(self, func, args, kwargs, res):    # make test
-        """
-        ----------------------------------------------------------------------------------------
-        UnitTest.__init__(self, func, args, kwargs, res)
+        """Constructor for class UnitTest.
 
-        Constructor in UnitTest.
+        The constructor initalizes input arguments in class UnitTest. If func is a
+        constant or non-callable, the constructor converts func to a callable
+        lambda-function with the same number of arguments as in args and kwargs.
 
-        If the input func isn't a callable function, we convert it to a lambda-function returning
-        the constant supplied as input func.
-
-        Input:
-            @param1: func
-                     A callable function (or constant that will be treated as a function)
-            @param2: args
-                     A list of arguments to func
-            @param3: kwargs
-                     A dictionary with extra additional arguments to func
-            @param4: res
-                     A correct value to test return value of func
+        Args:
+            func: A callable function or constant.
+            args: An argument or an argument list to func.
+            kwargs: A dictionary of keyword arguments with key value equal to the
+                keyword arguments in func.
+            res: An expected result from func(*args, **kwargs)
         """
 
-        # Check if @param1 is a callable function
+        # Check if func is a callable function
         if callable(func):
             self.func = func
         else:
             self.func = lambda *args, **kwargs: func
 
         # Store parameters in class
-        self.args = args
-        self.kwargs = kwargs
+        self.args = args or []
+        self.kwargs = kwargs or {}
         self.res = res
 
     def __call__(self):                             # run test
-        """
-        ----------------------------------------------------------------------------------------
-        UnitTest.__call__(self)
+        """Calling function for class UnitTest
 
-        Calling function in UnitTest.
+        The __call__ function tries to call the function func by splatting args and
+        kwargs as arguments.
 
         Return:
             @value: boolean
@@ -49,17 +51,7 @@ class UnitTest(object):
         """
 
         try: # Check if any errors were raised during calling of self.func
-            if self.kwargs != None and self.args != None:
-                return self.func(*self.args, **self.kwargs) == self.res
-
-            elif self.kwargs != None and self.args == None:
-                return self.func(**self.kwargs) == self.res
-
-            elif self.kwargs == None and self.args != None:
-                return self.func(*self.args) == self.res
-
-            else:
-                return self.func() == self.res
+            return self.func(*self.args, **self.kwargs) == self.res
 
         except IndexError:
             return False
