@@ -1,5 +1,5 @@
-scratch_files/*
-assignment_texts/*
+scratch_files/
+assignment_texts/
 *.swp
-*/__pycache__/*
-*/*/build/*
+build/
+__pycache__/
