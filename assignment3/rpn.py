@@ -1,4 +1,4 @@
-from cmath import sqrt, sin, cos # Allow complex values
+from numpy import sqrt, sin, cos, pi # Allow complex values
 from sys import argv # Read input from command line
 
 class RPNCalculator:
@@ -62,6 +62,10 @@ class RPNCalculator:
 
         if command == 'q': # Check if the user wishes to quit the program
             self.quit = True
+            return
+
+        if command == 'pi': # Check if the user wants to insert pi
+            self.stack.append(pi)
             return
 
         if command[-1] == 'j' or command[-1] == 'J': # Check if command can be a complex number
