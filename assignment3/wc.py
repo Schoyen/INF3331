@@ -70,6 +70,9 @@ class WordCount:
         char_counter is incremented by the length of the line, i.e., the number of characters in the
         string line, and the last element of word_counter is incremeneted by the length of the list
         line.split(), i.e., the number of whitespace separated substrings.
+
+        Args:
+            f: A file instance.
         """
         self.line_counter.append(0)
         self.word_counter.append(0)
