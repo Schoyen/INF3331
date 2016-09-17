@@ -85,7 +85,7 @@ class WordCount:
 
 if __name__ == '__main__':
     filename = argv[1:]
-    if filename[0] == "--usage":
+    if filename and filename[0] == "--usage":
         print (WordCount.__doc__)
         print (WordCount.__init__.__doc__)
         print (WordCount.__call__.__doc__)
