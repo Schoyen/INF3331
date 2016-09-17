@@ -2,35 +2,42 @@ from numpy import sqrt, sin, cos, pi # Allow complex values
 from sys import argv # Read input from command line
 
 class RPNCalculator:
-    """Class RPNCalculator is a calculator in Reverse Polish Notation.
-    The RPNCalculator can be run with command line arguments and/or from prompt.
+    """RPNCalculator is a Reverse Polish Notation calculator.
 
-    <object-instance> = RPNCalculator(<optional input from command line>) # Initializes program
-    <object-instance>() # Calling __call__ to start program.
+    The RPNCalculator is a calculator that can be run with command
+    line arguments and/or from prompt.
+
+    Attributes:
+        stack: A list treated as a stack. Used for appending and
+            popping of values recieved from used.
+        quit: A boolean value used to determine if the user wishes
+            to exit the program.
+        command_line: A list of optional additional command line arguments.
     """
-
     def __init__(self, command_line = None):
-        """Constructor for RPNCalculator
+        """Constructor for class RPNCalculator.
 
-        Input:
-            @param: command_line = None
-                    Optional additional input from command line.
-                    command_line must be a list.
+        Args:
+            command_line: An optional list of additional command line arguments.
         """
 
         self.stack = [] # Internal stack
         self.quit = False # Boolean value to determine if 'q' is input (i.e., quit)
-        self.command_line = command_line # Optional command line input
+        self.command_line = command_line or [] # Optional command line input
 
     def __call__(self):
-        """Calling function in RPNCalculator
+        """Calling function for class RPNCalculator
 
-        This function runs the user prompt and calls another function _process_input to
-        process input from prompt.
+        The __call__ function first processes the command line input if there are any.
+        It then proceeds to run the user prompt querying the user for input. When input
+        has been the recieved it is split into a whitespace-separated list and sent to
+        the private function _process_input.
+
+        The user prompt is run until a 'q' has been recieved from the user, thus setting
+        the boolean value quit = True.
         """
 
-        if type(self.command_line) == list: # Check if self.command_line is a list
-            self._process_input(self.command_line) # If self.command_line is a list, process the commands and/or numbers
+        self._process_input(self.command_line) # Process command line input first
 
         while not self.quit: # Loop until a 'q' has been input
             user_input = input("> ") # Output "> " and wait for user input
@@ -38,11 +45,16 @@ class RPNCalculator:
 
 
     def _process_input(self, user_input):
-        """Function used to test input from user.
+        """Private function for class RPNCalculator processing user input.
 
-        Input:
-            @param: user_input
-                    The user_input must be iterable, e.g., a list.
+        The function runs through all elements in the iterable list user_input
+        and attempts to convert each element into a float. If the current element
+        is a float it is appended to the end of the stack, i.e., the list stack.
+        If a ValueError is raised, the function sends the input to the private
+        function _execute as a potential command.
+
+        Args:
+            user_input: A list of argument strings.
         """
 
         for i in user_input: # Iterate over user_input
@@ -53,13 +65,14 @@ class RPNCalculator:
                 self._execute(i) # Execute command with _execute
 
     def _execute(self, command):
-        """Function used to execute commands.
+        """Private function for class RPNCalculator executing commands.
 
-        Input:
-            @param: command
-                    The command is treated as a string
+        The function runs through a series of conditionals in order
+        to determine which command has been requested by the user.
+
+        Args:
+            command: A string.
         """
-
         if command == 'q': # Check if the user wishes to quit the program
             self.quit = True
             return
@@ -91,12 +104,13 @@ class RPNCalculator:
                 self.stack.append(self.stack.pop() / float(self.stack.pop()))
 
     def _test_complex(self, c_number):
-        """Function testing if the input c_number can be treated as a complex number,
-        i.e., all characters are numbers except for last which will be 'j' or 'J'.
+        """Private function for class RPNCalculator testing if a string can be a complex number.
 
-        Input:
-            @param: c_number
-                    The input c_number is a string
+        The function tries to convert all but the last character (i.e., 'j' or 'J') in c_number
+        as a float.
+
+        Args:
+            c_number: A string.
         """
 
         try: # Check if all but the last character in c_string are numbers
@@ -108,5 +122,14 @@ class RPNCalculator:
 
 if __name__ == '__main__':
     command_line_input = argv[1:] # Get command line input excluding the program name
-    rpn = RPNCalculator(command_line_input) # Create an instance of RPNCalculator
-    rpn() # Call RPNCalculator
+    if command_line_input and command_line_input[0] == "--usage":
+        print (RPNCalculator.__doc__)
+        print (RPNCalculator.__init__.__doc__)
+        print (RPNCalculator.__call__.__doc__)
+        print (RPNCalculator._process_input.__doc__)
+        print (RPNCalculator._execute.__doc__)
+        print (RPNCalculator._test_complex.__doc__)
+
+    else:
+        rpn = RPNCalculator(command_line_input) # Create an instance of RPNCalculator
+        rpn() # Call RPNCalculator
