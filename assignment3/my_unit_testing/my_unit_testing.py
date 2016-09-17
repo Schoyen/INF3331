@@ -12,6 +12,7 @@ class UnitTest(object):
         res: An expected result from callind func with args and kwargs.
     """
 
+
     def __init__(self, func, args, kwargs, res):    # make test
         """Constructor for class UnitTest.
 
@@ -34,9 +35,12 @@ class UnitTest(object):
             self.func = lambda *args, **kwargs: func
 
         # Store parameters in class
-        self.args = args or []
-        self.kwargs = kwargs or {}
+        self.args = args or [] # If args == None, set self.args to an empty list
+        self.kwargs = kwargs or {} # If kwargs == None, set self.kwargs to an empty dict
         self.res = res
+
+
+        self._tolerance = 1.0e-10 # Variable used to check for equality in case of float
 
     def __call__(self):                             # run test
         """Calling function for class UnitTest
@@ -44,25 +48,33 @@ class UnitTest(object):
         The __call__ function tries to call the function func by splatting args and
         kwargs as arguments.
 
-        Return:
-            @value: boolean
-                    Returns True if return value from self.func is equal to self.res.
-                    Else, returns False
+        Returns:
+            bool: Returns True if return value from self.func is equal to self.res.
+                Else, returns False
         """
 
         try: # Check if any errors were raised during calling of self.func
-            return self.func(*self.args, **self.kwargs) == self.res
+            return abs(self.func(*self.args, **self.kwargs) - self.res) < self._tolerance
 
         except IndexError:
             return False
 
 
+    @property
+    def tolerance(self):
+        """Getter and setter properties for private variable _tolerance."""
+        return self._tolerance
+
+    @tolerance.setter
+    def tolerance(self, value):
+        self._tolerance = value
 
 if __name__ == '__main__':
     # Outputting documentation in UniTest
     print (UnitTest.__doc__)
     print (UnitTest.__init__.__doc__)
     print (UnitTest.__call__.__doc__)
+    print (UnitTest.tolerance.__doc__)
 
     # Short and simple testing of the module
     func = lambda a, b, c: a + b + c
