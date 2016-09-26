@@ -39,7 +39,7 @@ def create_mandelbrot_set():
     # Create a white image to begin with
     A = [[[1, 1, 1] for j in range(n)] for i in range(n)]
 
-    ms = MandelbrotSet((x_start, y_start), threshold=100)
+    ms = MandelbrotSet((x_start, y_start))
     for i in range(n):
         for j in range(n):
             ms.a, ms.b = (x_start + i*dx, y_start + j*dx)
@@ -52,7 +52,7 @@ def create_mandelbrot_set():
     figure(1)
     imshow(A, extent=[x_start, x_stop, y_start, y_stop])
     savefig("mandelbrot.png")
-    show()
+    #show()
 
 if __name__ == '__main__':
     create_mandelbrot_set()
