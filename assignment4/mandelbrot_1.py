@@ -11,12 +11,12 @@ class MandelbrotSet:
     def __call__(self, z):
         x, y = self.test_if_list_or_tuple(z, "z")
         counter = 0
-        while counter < self.threshold:
-            z = (x**2 - y**2 + self.a, 2*x*y + self.b)
-            abs_z = sqrt(z[0]**2 + z[1]**2)
-            if abs_z > 2:
-                break
+        x, y = (x**2 - y**2 + self.a, 2*x*y + self.b)
+        abs_z = sqrt(x**2 + y**2)
+        while counter < self.threshold and abs_z <= 2:
             counter += 1
+            x, y = (x**2 - y**2 + self.a, 2*x*y + self.b)
+            abs_z = sqrt(x**2 + y**2)
         return abs_z, counter
             
     def test_if_list_or_tuple(self, value, name):
@@ -35,9 +35,9 @@ def create_mandelbrot_set():
     x_stop = 0.5
     y_stop = 1
     n = 1000
-    threshold = 100
-    dx = (x_stop - x_start)/float(n)
-    dy = (y_stop - y_start)/float(n)
+    threshold = 1000
+    dx = (x_stop - x_start)/float(n - 1)
+    dy = (y_stop - y_start)/float(n - 1)
 
     # Create a white image to begin with
     A = [[[1, 1, 1] for j in range(n)] for i in range(n)]
@@ -54,7 +54,7 @@ def create_mandelbrot_set():
 
     figure(1)
     imshow(A, extent=[x_start, x_stop, y_start, y_stop])
-    #savefig("mandelbrot.png")
+    savefig("mandelbrot.png")
     show()
 
 if __name__ == '__main__':
