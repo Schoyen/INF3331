@@ -34,7 +34,7 @@ def create_mandelbrot_set():
     y_start = -1
     x_stop = 0.5
     y_stop = 1
-    n = 1000
+    n = 100
     threshold = 1000
     dx = (x_stop - x_start)/float(n - 1)
     dy = (y_stop - y_start)/float(n - 1)
@@ -50,7 +50,13 @@ def create_mandelbrot_set():
             if abs_z <= 2:
                 A[j][i] = [0, 0, 0] # Color pixel black if it is in the mandelbrot set (i.e., abs_z <= 2)
             else:
-                A[j][i] = [1 - counter/float(threshold), 1 - counter/float(threshold), 1 - counter/float(threshold)]
+                if counter < threshold/3.0:
+                    color = [counter/float(threshold), 0.7, 0.7]
+                elif counter < 2*threshold/3.0:
+                    color = [0.5, counter/float(threshold), 0.5]
+                else:
+                    color = [0.2, 0.2, counter/float(threshold)]
+                A[j][i] = color
 
     figure(1)
     imshow(A, extent=[x_start, x_stop, y_start, y_stop])
