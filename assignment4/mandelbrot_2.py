@@ -1,4 +1,4 @@
-from numpy import linspace, ogrid, array, zeros, conj
+from numpy import ogrid, zeros, conj
 from matplotlib.pylab import imshow, show, savefig
 from tqdm import tqdm
 
