@@ -1,2 +1,2 @@
-s = 's = %r\nprint(s%%s)'
-print (s%s)
+var = 'var = %r\nprint(var %% var)'
+print (var % var)
