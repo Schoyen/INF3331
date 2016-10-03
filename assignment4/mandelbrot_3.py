@@ -1,7 +1,9 @@
 from mandelbrot import mandelbrot_set
+from matplotlib.pylab import imshow, show
 
-height = 10
-width = 10
-threshold = 10
+height = 100
+width = 100
+threshold = 100
 divergence_criteria = 2
-print (mandelbrot_set(height, width, threshold, divergence_criteria))
+imshow(mandelbrot_set(height, width, threshold, divergence_criteria))
+show()
