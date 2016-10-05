@@ -3,3 +3,4 @@ assignment_texts/
 *.swp
 build/
 __pycache__/
+*.pyc
