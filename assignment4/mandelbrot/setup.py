@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
+from Cython.Build import cythonize
 
 def read_doc():
     with open("README.rst", 'r') as f:
@@ -17,9 +18,14 @@ setup(name="mandelbrot",
           'Programming Language :: Python :: 3.5',
       ],
       packages=find_packages(),
+      ext_modules=cythonize(
+          [
+              Extension("mandelbrot.src.mandelbrot", ["mandelbrot/src/mandelbrot.pyx"])
+              ]
+      ),
       entry_points={
           'console_scripts': [
               'mandelbrot=mandelbrot.mandelbrot_client:main',
           ],
       },
-     )
+)
