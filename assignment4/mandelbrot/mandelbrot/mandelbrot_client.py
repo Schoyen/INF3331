@@ -1,7 +1,7 @@
 from . import silly
 from .usage import display_help
 from sys import argv
-from .src.mandelbrot_1 import MandelbrotPython
+from .src import MandelbrotPython, MandelbrotNumpy
 
 def main():
     print (u"This is main\nNow calling silly() in __init__.py...")
