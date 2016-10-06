@@ -12,4 +12,9 @@ setup(name="mandelbrot",
           'Programming Language :: Python :: 3.5',
       ],
       packages=find_packages(),
+      entry_points={
+          'console_scripts': [
+              'mandelbrot=mandelbrot:silly',
+          ],
+      },
      )
