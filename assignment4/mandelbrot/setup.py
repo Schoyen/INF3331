@@ -1,8 +1,13 @@
 from setuptools import setup, find_packages
 
+def read_doc():
+    with open("README.rst", 'r') as f:
+        return f.read()
+
 setup(name="mandelbrot",
       version='0.1',
       description='Create mandelbrot sets',
+      long_description=read_doc(),
       author=u'Øyvind Sigmundson Schøyen',
       classifiers=[
           'Programming Language :: Python :: 3',
@@ -14,7 +19,7 @@ setup(name="mandelbrot",
       packages=find_packages(),
       entry_points={
           'console_scripts': [
-              'mandelbrot=mandelbrot:silly',
+              'mandelbrot=mandelbrot.mandelbrot_client:main',
           ],
       },
      )
