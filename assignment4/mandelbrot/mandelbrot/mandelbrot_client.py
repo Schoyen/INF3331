@@ -1,6 +1,7 @@
 from . import silly
 from .usage import display_help
 from sys import argv
+from .src.mandelbrot_1 import MandelbrotPython
 
 def main():
     print (u"This is main\nNow calling silly() in __init__.py...")
@@ -8,3 +9,4 @@ def main():
     print ("These are your command line arguments")
     print (argv)
     print (display_help())
+
