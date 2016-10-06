@@ -1,4 +1,5 @@
 from . import silly
+from .usage import display_help
 from sys import argv
 
 def main():
@@ -6,3 +7,4 @@ def main():
     silly()
     print ("These are your command line arguments")
     print (argv)
+    print (display_help())
