@@ -1,7 +1,6 @@
-from .usage import display_help
 from sys import argv
-from .src import MandelbrotPython, MandelbrotNumpy, MandelbrotCython
 from argparse import ArgumentParser
+from . import MandelbrotPython, MandelbrotCython, MandelbrotNumpy
 
 def main():
     description = """
