@@ -1,6 +1,6 @@
 from sys import argv
 from argparse import ArgumentParser
-from . import MandelbrotPython, MandelbrotCython, MandelbrotNumpy
+from . import MandelbrotPython, MandelbrotCython, MandelbrotNumpy, compute_mandelbrot
 
 def main():
     description = """
@@ -29,3 +29,4 @@ def main():
     print (args.func)
     arg_list = args.coords + args.steps
     print (arg_list)
+    compute_mandelbrot(*arg_list)
