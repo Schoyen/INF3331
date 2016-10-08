@@ -5,5 +5,6 @@ def compute_mandelbrot(xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time=1000, plo
     mc = mandelbrot_class(xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time=max_escape_time)
     escape_matrix = mc()
     imshow(escape_matrix)
-    savefig(plot_filename)
+    if plot_filename:
+        savefig(plot_filename)
     show()
