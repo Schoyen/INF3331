@@ -20,7 +20,7 @@ setup(name="mandelbrot",
       packages=find_packages(),
       ext_modules=cythonize(
           [
-              Extension("mandelbrot.src.mandelbrot", ["mandelbrot/src/mandelbrot.pyx"])
+              Extension("mandelbrot.src.mandelbrot_cython", ["mandelbrot/src/mandelbrot_cython.pyx"])
               ]
       ),
       entry_points={

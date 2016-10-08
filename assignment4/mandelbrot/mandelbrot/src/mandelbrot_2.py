@@ -1,5 +1,4 @@
 from numpy import ogrid, zeros, conj
-from time import time
 
 
 class MandelbrotNumpy:
@@ -24,6 +23,7 @@ class MandelbrotNumpy:
 
 if __name__ == '__main__':
     from matplotlib.pylab import imshow, show, savefig
+    from time import time
     mv = MandelbrotNumpy(-2, 0.5, -1, 1, 1000, 1000)
     t0 = time()
     mv()

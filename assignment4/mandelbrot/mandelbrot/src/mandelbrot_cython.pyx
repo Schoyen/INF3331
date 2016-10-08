@@ -1,7 +1,7 @@
 import numpy
 cimport numpy
 
-cpdef numpy.ndarray[numpy.int16_t, ndim=2] MandelbrotCython(
+cpdef numpy.ndarray[numpy.int16_t, ndim=2] mandelbrot_set_cython(
         xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time, divergence_criteria):
     cdef numpy.ndarray[numpy.complex128_t, ndim=1] c_complex
     cdef numpy.ndarray[numpy.double_t, ndim=1] c_real
