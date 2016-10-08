@@ -32,4 +32,5 @@ def main():
     numpy_parser.set_defaults(func=MandelbrotNumpy)
     args = parser.parse_args()
     arg_list = args.coords + args.steps
-    compute_mandelbrot(*arg_list, plot_filename=args.filename, max_escape_time=args.escape_time, divergence_criteria=args.divergence_criteria)
+    compute_mandelbrot(*arg_list, mandelbrot_class=args.func, plot_filename=args.filename,
+            max_escape_time=args.escape_time, divergence_criteria=args.divergence_criteria)
