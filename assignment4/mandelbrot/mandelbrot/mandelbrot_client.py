@@ -9,32 +9,24 @@ def main():
     computing and displaying the Mandelbrot. The three different implementations are
     written using Python, Python with Numpy vectorization and Cython.
     """
+    implementation_map = {'cython': MandelbrotCython,
+            'python': MandelbrotPython,
+            'numpy': MandelbrotNumpy}
     parser = ArgumentParser(description=description)
-    parser.add_argument("-c", "--cython", help="Create the Mandelbrot set using Cython")
-    parser.parse_args()
-#    mc = MandelbrotClient(argv)
-#    mc()
-
-class MandelbrotClient:
-
-    def __init__(self, args):
-        self.args = args
-        self.valid_commands = []
-        for i in display_help().split():
-            if i == "Usage:":
-                break
-            if i.startswith("-"):
-                self.valid_commands.append(i)
-        self.commands = {"help": display_help,
-                "cython": MandelbrotCython,
-                "python": MandelbrotPython,
-                "numpy": MandelbrotNumpy}
-
-    def __call__(self):
-        if len(self.args) < 2:
-            print(display_help())
-        else:
-            if self.args[1] in self.valid_commands:
-                pass
-            else:
-                print("mandelbrot: command not found: %s" % self.args[1])
+    parent_parser = ArgumentParser(add_help=False)
+    subparser = parser.add_subparsers(help="commands")
+    parent_parser.add_argument("coords", metavar='args', type=float, nargs=4,
+            help="The coordinates for the Mandelbrot set (xmin, xmax, ymin, ymax)")
+    parent_parser.add_argument("steps", metavar='steps', type=int, nargs=2,
+            help="The number of steps in x and y direction (Nx, Ny)")
+    python_parser = subparser.add_parser('python', help='Create the Mandelbrot set using Python', parents=[parent_parser])
+    python_parser.set_defaults(func=MandelbrotPython)
+    cython_parser = subparser.add_parser('cython', help='Create the Mandelbrot set using Cython', parents=[parent_parser])
+    cython_parser.set_defaults(func=MandelbrotCython)
+    numpy_parser = subparser.add_parser('numpy', help='Create the Mandelbrot set using Numpy', parents=[parent_parser])
+    numpy_parser.set_defaults(func=MandelbrotNumpy)
+    args = parser.parse_args()
+    print (args)
+    print (args.func)
+    arg_list = args.coords + args.steps
+    print (arg_list)
