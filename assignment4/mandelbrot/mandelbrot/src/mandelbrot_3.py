@@ -7,8 +7,5 @@ class MandelbrotCython:
         self.args = [xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time, divergence_criteria]
 
     def __call__(self):
-        t0 = time()
         m_set = mandelbrot_set_cython(*self.args)
-        t1 = time()
-        print ("Cython-time: {:.4} s".format(t1 - t0))
         return m_set
