@@ -8,4 +8,5 @@ def compute_mandelbrot(xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time=1000, plo
     if plot_filename:
         imshow(escape_matrix)
         savefig(plot_filename)
-    return escape_matrix
+    print (escape_matrix)
+    #return escape_matrix
