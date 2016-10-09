@@ -27,7 +27,7 @@ class MandelbrotNumpy:
         self.divergence_criteria = divergence_criteria
 
     def __call__(self):
-        """Calling function for class MandelbrotPython.
+        """Calling function for class MandelbrotNumpy.
 
         This function calculates the Mandelbrot set using Python and Numpy.
 
