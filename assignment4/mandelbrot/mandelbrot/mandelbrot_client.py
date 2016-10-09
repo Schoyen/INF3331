@@ -1,8 +1,14 @@
 from sys import argv
 from argparse import ArgumentParser
 from . import MandelbrotPython, MandelbrotCython, MandelbrotNumpy, compute_mandelbrot
+from matplotlib.pylab import imshow, show
 
 def main():
+    """Function being run when typing mandelbrot on the command line.
+
+    This function handles the user interface and calls the correct Python functions
+    when a user has input a command.
+    """
     description = """
     A command line interface for controlling three different Python implementations
     computing and displaying the Mandelbrot. The three different implementations are
@@ -24,6 +30,8 @@ def main():
             help="The max escape time before determining convergence (default=1000)", default=1000)
     parent_parser.add_argument("-d", "--divergence-criteria", metavar="divergence-criteria", type=float, nargs='?',
             help="The divergence criteria for the Mandelbrot set (default=2.0)", default=2.0)
+    parent_parser.add_argument("-s", "--show", metavar="show", type=bool, nargs='?',
+            help="A bool determining if an image is to be shown on screen (default=False)", default=False)
     python_parser = subparser.add_parser('python', help='Create the Mandelbrot set using Python', parents=[parent_parser])
     python_parser.set_defaults(func=MandelbrotPython)
     cython_parser = subparser.add_parser('cython', help='Create the Mandelbrot set using Cython', parents=[parent_parser])
@@ -32,5 +40,8 @@ def main():
     numpy_parser.set_defaults(func=MandelbrotNumpy)
     args = parser.parse_args()
     arg_list = args.coords + args.steps
-    compute_mandelbrot(*arg_list, mandelbrot_class=args.func, plot_filename=args.filename,
+    mat = compute_mandelbrot(*arg_list, mandelbrot_class=args.func, plot_filename=args.filename,
             max_escape_time=args.escape_time, divergence_criteria=args.divergence_criteria)
+    if args.show:
+        imshow(mat)
+        show()
