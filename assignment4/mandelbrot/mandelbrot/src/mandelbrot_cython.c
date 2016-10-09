@@ -1073,6 +1073,9 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
 /* None.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1177,9 +1180,6 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 #endif
 
 /* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
-
-/* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES value);
 
 /* CIntFromPy.proto */
@@ -1243,6 +1243,8 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
 /* Module declarations from 'cython' */
+
+/* Module declarations from 'cpython.mem' */
 
 /* Module declarations from 'mandelbrot.src.mandelbrot_cython' */
 static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double, double, double, double, unsigned int, unsigned int, unsigned int, double, int __pyx_skip_dispatch); /*proto*/
@@ -1314,7 +1316,7 @@ static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
 
-/* "mandelbrot/src/mandelbrot_cython.pyx":7
+/* "mandelbrot/src/mandelbrot_cython.pyx":8
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
@@ -1324,199 +1326,207 @@ static PyObject *__pyx_tuple__6;
 
 static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_cython(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, unsigned int __pyx_v_Nx, unsigned int __pyx_v_Ny, unsigned int __pyx_v_max_escape_time, double __pyx_v_divergence_criteria, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  double __pyx_v_dx;
-  CYTHON_UNUSED double __pyx_v_dy;
   double __pyx_v_c_real;
   double __pyx_v_c_imag;
   double __pyx_v_z_real;
   double __pyx_v_z_imag;
-  double __pyx_v_div;
   unsigned int __pyx_v_i;
   unsigned int __pyx_v_j;
   unsigned int __pyx_v_k;
-  PyArrayObject *__pyx_v_divergence_steps = 0;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_divergence_steps;
-  __Pyx_Buffer __pyx_pybuffer_divergence_steps;
+  double __pyx_v_dx;
+  CYTHON_UNUSED double __pyx_v_dy;
+  int **__pyx_v_divergence_steps;
+  double __pyx_v_div;
+  PyArrayObject *__pyx_v_divergence_steps_np = 0;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_divergence_steps_np;
+  __Pyx_Buffer __pyx_pybuffer_divergence_steps_np;
   PyArrayObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  PyArrayObject *__pyx_t_7 = NULL;
-  int __pyx_t_8;
-  PyObject *__pyx_t_9 = NULL;
+  unsigned int __pyx_t_2;
+  unsigned int __pyx_t_3;
+  unsigned int __pyx_t_4;
+  unsigned int __pyx_t_5;
+  long __pyx_t_6;
+  unsigned int __pyx_t_7;
+  double __pyx_t_8;
+  int __pyx_t_9;
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
-  unsigned int __pyx_t_12;
-  unsigned int __pyx_t_13;
-  unsigned int __pyx_t_14;
-  unsigned int __pyx_t_15;
-  long __pyx_t_16;
-  unsigned int __pyx_t_17;
-  double __pyx_t_18;
-  int __pyx_t_19;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
+  PyObject *__pyx_t_14 = NULL;
+  PyArrayObject *__pyx_t_15 = NULL;
+  int __pyx_t_16;
+  PyObject *__pyx_t_17 = NULL;
+  PyObject *__pyx_t_18 = NULL;
+  PyObject *__pyx_t_19 = NULL;
   __Pyx_RefNannySetupContext("mandelbrot_set_cython", 0);
-  __pyx_pybuffer_divergence_steps.pybuffer.buf = NULL;
-  __pyx_pybuffer_divergence_steps.refcount = 0;
-  __pyx_pybuffernd_divergence_steps.data = NULL;
-  __pyx_pybuffernd_divergence_steps.rcbuffer = &__pyx_pybuffer_divergence_steps;
+  __pyx_pybuffer_divergence_steps_np.pybuffer.buf = NULL;
+  __pyx_pybuffer_divergence_steps_np.refcount = 0;
+  __pyx_pybuffernd_divergence_steps_np.data = NULL;
+  __pyx_pybuffernd_divergence_steps_np.rcbuffer = &__pyx_pybuffer_divergence_steps_np;
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":12
- *     cdef double dx, dy, c_real, c_imag, z_real, z_imag, div
+  /* "mandelbrot/src/mandelbrot_cython.pyx":13
+ *     cdef double c_real, c_imag, z_real, z_imag
  *     cdef unsigned int i, j, k
- *     dx = (xmax - xmin)/float(Nx - 1)             # <<<<<<<<<<<<<<
- *     dy = (ymax - ymin)/float(Ny - 1)
- *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
+ *     cdef double dx = (xmax - xmin)/float(Nx - 1)             # <<<<<<<<<<<<<<
+ *     cdef double dy = (ymax - ymin)/float(Ny - 1)
+ * 
  */
   __pyx_t_1 = (__pyx_v_xmax - __pyx_v_xmin);
   if (unlikely(((double)(__pyx_v_Nx - 1)) == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 12, __pyx_L1_error)
+    __PYX_ERR(0, 13, __pyx_L1_error)
   }
   __pyx_v_dx = (__pyx_t_1 / ((double)(__pyx_v_Nx - 1)));
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":13
+  /* "mandelbrot/src/mandelbrot_cython.pyx":14
  *     cdef unsigned int i, j, k
- *     dx = (xmax - xmin)/float(Nx - 1)
- *     dy = (ymax - ymin)/float(Ny - 1)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
- *     divergence_steps = np.zeros([Ny, Nx], dtype=np.uint8)
+ *     cdef double dx = (xmax - xmin)/float(Nx - 1)
+ *     cdef double dy = (ymax - ymin)/float(Ny - 1)             # <<<<<<<<<<<<<<
+ * 
+ *     # Allocate memory for matrix with escape times
  */
   __pyx_t_1 = (__pyx_v_ymax - __pyx_v_ymin);
   if (unlikely(((double)(__pyx_v_Ny - 1)) == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 13, __pyx_L1_error)
+    __PYX_ERR(0, 14, __pyx_L1_error)
   }
   __pyx_v_dy = (__pyx_t_1 / ((double)(__pyx_v_Ny - 1)));
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":15
- *     dy = (ymax - ymin)/float(Ny - 1)
- *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
- *     divergence_steps = np.zeros([Ny, Nx], dtype=np.uint8)             # <<<<<<<<<<<<<<
- *     div = divergence_criteria**2
+  /* "mandelbrot/src/mandelbrot_cython.pyx":17
+ * 
+ *     # Allocate memory for matrix with escape times
+ *     cdef int **divergence_steps = <int **>PyMem_Malloc(Ny * sizeof(int *))             # <<<<<<<<<<<<<<
+ *     divergence_steps[0] = <int *>PyMem_Malloc(Nx*Ny * sizeof(int))
+ *     # Make memory contiguous
+ */
+  __pyx_v_divergence_steps = ((int **)PyMem_Malloc((__pyx_v_Ny * (sizeof(int *)))));
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":18
+ *     # Allocate memory for matrix with escape times
+ *     cdef int **divergence_steps = <int **>PyMem_Malloc(Ny * sizeof(int *))
+ *     divergence_steps[0] = <int *>PyMem_Malloc(Nx*Ny * sizeof(int))             # <<<<<<<<<<<<<<
+ *     # Make memory contiguous
+ *     for i in range(1, Ny):
+ */
+  (__pyx_v_divergence_steps[0]) = ((int *)PyMem_Malloc(((__pyx_v_Nx * __pyx_v_Ny) * (sizeof(int)))));
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":20
+ *     divergence_steps[0] = <int *>PyMem_Malloc(Nx*Ny * sizeof(int))
+ *     # Make memory contiguous
+ *     for i in range(1, Ny):             # <<<<<<<<<<<<<<
+ *         divergence_steps[i] = divergence_steps[i - 1] + Nx
+ *     # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
+ */
+  __pyx_t_2 = __pyx_v_Ny;
+  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "mandelbrot/src/mandelbrot_cython.pyx":21
+ *     # Make memory contiguous
+ *     for i in range(1, Ny):
+ *         divergence_steps[i] = divergence_steps[i - 1] + Nx             # <<<<<<<<<<<<<<
+ *     # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
+ *     for j in range(Ny):
+ */
+    (__pyx_v_divergence_steps[__pyx_v_i]) = ((__pyx_v_divergence_steps[(__pyx_v_i - 1)]) + __pyx_v_Nx);
+  }
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":23
+ *         divergence_steps[i] = divergence_steps[i - 1] + Nx
+ *     # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
+ *     for j in range(Ny):             # <<<<<<<<<<<<<<
+ *         for i in range(Nx):
+ *             divergence_steps[j][i] = 0
+ */
+  __pyx_t_2 = __pyx_v_Ny;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_j = __pyx_t_3;
+
+    /* "mandelbrot/src/mandelbrot_cython.pyx":24
+ *     # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
+ *     for j in range(Ny):
+ *         for i in range(Nx):             # <<<<<<<<<<<<<<
+ *             divergence_steps[j][i] = 0
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
-  __pyx_t_2 = 0;
-  __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_uint8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 15, __pyx_L1_error)
-  __pyx_t_7 = ((PyArrayObject *)__pyx_t_6);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer);
-    __pyx_t_8 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
-    if (unlikely(__pyx_t_8 < 0)) {
-      PyErr_Fetch(&__pyx_t_9, &__pyx_t_10, &__pyx_t_11);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer, (PyObject*)__pyx_v_divergence_steps, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
-        Py_XDECREF(__pyx_t_9); Py_XDECREF(__pyx_t_10); Py_XDECREF(__pyx_t_11);
-        __Pyx_RaiseBufferFallbackError();
-      } else {
-        PyErr_Restore(__pyx_t_9, __pyx_t_10, __pyx_t_11);
-      }
-    }
-    __pyx_pybuffernd_divergence_steps.diminfo[0].strides = __pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_divergence_steps.diminfo[0].shape = __pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_divergence_steps.diminfo[1].strides = __pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_divergence_steps.diminfo[1].shape = __pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer.shape[1];
-    if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 15, __pyx_L1_error)
-  }
-  __pyx_t_7 = 0;
-  __pyx_v_divergence_steps = ((PyArrayObject *)__pyx_t_6);
-  __pyx_t_6 = 0;
+    __pyx_t_4 = __pyx_v_Nx;
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":16
- *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
- *     divergence_steps = np.zeros([Ny, Nx], dtype=np.uint8)
- *     div = divergence_criteria**2             # <<<<<<<<<<<<<<
+      /* "mandelbrot/src/mandelbrot_cython.pyx":25
+ *     for j in range(Ny):
+ *         for i in range(Nx):
+ *             divergence_steps[j][i] = 0             # <<<<<<<<<<<<<<
  * 
- *     for i in range(Nx):
+ *     cdef double div = divergence_criteria**2
+ */
+      ((__pyx_v_divergence_steps[__pyx_v_j])[__pyx_v_i]) = 0;
+    }
+  }
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":27
+ *             divergence_steps[j][i] = 0
+ * 
+ *     cdef double div = divergence_criteria**2             # <<<<<<<<<<<<<<
+ * 
+ *     for j in range(Ny):
  */
   __pyx_v_div = pow(__pyx_v_divergence_criteria, 2.0);
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":18
- *     div = divergence_criteria**2
+  /* "mandelbrot/src/mandelbrot_cython.pyx":29
+ *     cdef double div = divergence_criteria**2
  * 
- *     for i in range(Nx):             # <<<<<<<<<<<<<<
- *         c_real = xmin + i*dx
- *         for j in range(Ny):
+ *     for j in range(Ny):             # <<<<<<<<<<<<<<
+ *         c_imag = ymin + j*dx
+ *         for i in range(Nx):
  */
-  __pyx_t_12 = __pyx_v_Nx;
-  for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
-    __pyx_v_i = __pyx_t_13;
+  __pyx_t_2 = __pyx_v_Ny;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_j = __pyx_t_3;
 
-    /* "mandelbrot/src/mandelbrot_cython.pyx":19
+    /* "mandelbrot/src/mandelbrot_cython.pyx":30
  * 
- *     for i in range(Nx):
- *         c_real = xmin + i*dx             # <<<<<<<<<<<<<<
- *         for j in range(Ny):
- *             c_imag = ymin + j*dx
+ *     for j in range(Ny):
+ *         c_imag = ymin + j*dx             # <<<<<<<<<<<<<<
+ *         for i in range(Nx):
+ *             c_real = xmin + i*dx
  */
-    __pyx_v_c_real = (__pyx_v_xmin + (__pyx_v_i * __pyx_v_dx));
+    __pyx_v_c_imag = (__pyx_v_ymin + (__pyx_v_j * __pyx_v_dx));
 
-    /* "mandelbrot/src/mandelbrot_cython.pyx":20
- *     for i in range(Nx):
- *         c_real = xmin + i*dx
- *         for j in range(Ny):             # <<<<<<<<<<<<<<
- *             c_imag = ymin + j*dx
+    /* "mandelbrot/src/mandelbrot_cython.pyx":31
+ *     for j in range(Ny):
+ *         c_imag = ymin + j*dx
+ *         for i in range(Nx):             # <<<<<<<<<<<<<<
+ *             c_real = xmin + i*dx
  *             z_real = 0.0
  */
-    __pyx_t_14 = __pyx_v_Ny;
-    for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-      __pyx_v_j = __pyx_t_15;
+    __pyx_t_4 = __pyx_v_Nx;
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_i = __pyx_t_5;
 
-      /* "mandelbrot/src/mandelbrot_cython.pyx":21
- *         c_real = xmin + i*dx
- *         for j in range(Ny):
- *             c_imag = ymin + j*dx             # <<<<<<<<<<<<<<
+      /* "mandelbrot/src/mandelbrot_cython.pyx":32
+ *         c_imag = ymin + j*dx
+ *         for i in range(Nx):
+ *             c_real = xmin + i*dx             # <<<<<<<<<<<<<<
  *             z_real = 0.0
  *             z_imag = 0.0
  */
-      __pyx_v_c_imag = (__pyx_v_ymin + (__pyx_v_j * __pyx_v_dx));
+      __pyx_v_c_real = (__pyx_v_xmin + (__pyx_v_i * __pyx_v_dx));
 
-      /* "mandelbrot/src/mandelbrot_cython.pyx":22
- *         for j in range(Ny):
- *             c_imag = ymin + j*dx
+      /* "mandelbrot/src/mandelbrot_cython.pyx":33
+ *         for i in range(Nx):
+ *             c_real = xmin + i*dx
  *             z_real = 0.0             # <<<<<<<<<<<<<<
  *             z_imag = 0.0
  *             for k in range(1, max_escape_time + 1):
  */
       __pyx_v_z_real = 0.0;
 
-      /* "mandelbrot/src/mandelbrot_cython.pyx":23
- *             c_imag = ymin + j*dx
+      /* "mandelbrot/src/mandelbrot_cython.pyx":34
+ *             c_real = xmin + i*dx
  *             z_real = 0.0
  *             z_imag = 0.0             # <<<<<<<<<<<<<<
  *             for k in range(1, max_escape_time + 1):
@@ -1524,18 +1534,18 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  */
       __pyx_v_z_imag = 0.0;
 
-      /* "mandelbrot/src/mandelbrot_cython.pyx":24
+      /* "mandelbrot/src/mandelbrot_cython.pyx":35
  *             z_real = 0.0
  *             z_imag = 0.0
  *             for k in range(1, max_escape_time + 1):             # <<<<<<<<<<<<<<
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
  *                 if (z_real*z_real + z_imag*z_imag) > div:
  */
-      __pyx_t_16 = (__pyx_v_max_escape_time + 1);
-      for (__pyx_t_17 = 1; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
-        __pyx_v_k = __pyx_t_17;
+      __pyx_t_6 = (__pyx_v_max_escape_time + 1);
+      for (__pyx_t_7 = 1; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_k = __pyx_t_7;
 
-        /* "mandelbrot/src/mandelbrot_cython.pyx":25
+        /* "mandelbrot/src/mandelbrot_cython.pyx":36
  *             z_imag = 0.0
  *             for k in range(1, max_escape_time + 1):
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)             # <<<<<<<<<<<<<<
@@ -1543,30 +1553,30 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *                     break
  */
         __pyx_t_1 = (((__pyx_v_z_real * __pyx_v_z_real) - (__pyx_v_z_imag * __pyx_v_z_imag)) + __pyx_v_c_real);
-        __pyx_t_18 = (((2.0 * __pyx_v_z_real) * __pyx_v_z_imag) + __pyx_v_c_imag);
+        __pyx_t_8 = (((2.0 * __pyx_v_z_real) * __pyx_v_z_imag) + __pyx_v_c_imag);
         __pyx_v_z_real = __pyx_t_1;
-        __pyx_v_z_imag = __pyx_t_18;
+        __pyx_v_z_imag = __pyx_t_8;
 
-        /* "mandelbrot/src/mandelbrot_cython.pyx":26
+        /* "mandelbrot/src/mandelbrot_cython.pyx":37
  *             for k in range(1, max_escape_time + 1):
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
  *                 if (z_real*z_real + z_imag*z_imag) > div:             # <<<<<<<<<<<<<<
  *                     break
  *                 divergence_steps[j][i] = k
  */
-        __pyx_t_19 = ((((__pyx_v_z_real * __pyx_v_z_real) + (__pyx_v_z_imag * __pyx_v_z_imag)) > __pyx_v_div) != 0);
-        if (__pyx_t_19) {
+        __pyx_t_9 = ((((__pyx_v_z_real * __pyx_v_z_real) + (__pyx_v_z_imag * __pyx_v_z_imag)) > __pyx_v_div) != 0);
+        if (__pyx_t_9) {
 
-          /* "mandelbrot/src/mandelbrot_cython.pyx":27
+          /* "mandelbrot/src/mandelbrot_cython.pyx":38
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
  *                 if (z_real*z_real + z_imag*z_imag) > div:
  *                     break             # <<<<<<<<<<<<<<
  *                 divergence_steps[j][i] = k
- *     return divergence_steps
+ *     # Create numpy array used to return values to Python caller
  */
-          goto __pyx_L8_break;
+          goto __pyx_L14_break;
 
-          /* "mandelbrot/src/mandelbrot_cython.pyx":26
+          /* "mandelbrot/src/mandelbrot_cython.pyx":37
  *             for k in range(1, max_escape_time + 1):
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
  *                 if (z_real*z_real + z_imag*z_imag) > div:             # <<<<<<<<<<<<<<
@@ -1575,35 +1585,151 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  */
         }
 
-        /* "mandelbrot/src/mandelbrot_cython.pyx":28
+        /* "mandelbrot/src/mandelbrot_cython.pyx":39
  *                 if (z_real*z_real + z_imag*z_imag) > div:
  *                     break
  *                 divergence_steps[j][i] = k             # <<<<<<<<<<<<<<
- *     return divergence_steps
+ *     # Create numpy array used to return values to Python caller
+ *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps_np
  */
-        __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_k); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_5 = __Pyx_GetItemInt(((PyObject *)__pyx_v_divergence_steps), __pyx_v_j, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_5);
-        if (unlikely(__Pyx_SetItemInt(__pyx_t_5, __pyx_v_i, __pyx_t_6, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+        ((__pyx_v_divergence_steps[__pyx_v_j])[__pyx_v_i]) = __pyx_v_k;
       }
-      __pyx_L8_break:;
+      __pyx_L14_break:;
     }
   }
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":29
- *                     break
- *                 divergence_steps[j][i] = k
- *     return divergence_steps             # <<<<<<<<<<<<<<
+  /* "mandelbrot/src/mandelbrot_cython.pyx":42
+ *     # Create numpy array used to return values to Python caller
+ *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps_np
+ *     divergence_steps_np = np.zeros([Ny, Nx], dtype=np.uint8)             # <<<<<<<<<<<<<<
+ *     # Copy elements from allocated memory to numpy array
+ *     for i in range(Nx):
+ */
+  __pyx_t_10 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_zeros); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_11);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Ny); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_12 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Nx); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __pyx_t_13 = PyList_New(2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_13);
+  __Pyx_GIVEREF(__pyx_t_10);
+  PyList_SET_ITEM(__pyx_t_13, 0, __pyx_t_10);
+  __Pyx_GIVEREF(__pyx_t_12);
+  PyList_SET_ITEM(__pyx_t_13, 1, __pyx_t_12);
+  __pyx_t_10 = 0;
+  __pyx_t_12 = 0;
+  __pyx_t_12 = PyTuple_New(1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_12);
+  __Pyx_GIVEREF(__pyx_t_13);
+  PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_13);
+  __pyx_t_13 = 0;
+  __pyx_t_13 = PyDict_New(); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_13);
+  __pyx_t_10 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_uint8); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_14);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  if (PyDict_SetItem(__pyx_t_13, __pyx_n_s_dtype, __pyx_t_14) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+  __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_12, __pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_14);
+  __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+  if (!(likely(((__pyx_t_14) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_14, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_15 = ((PyArrayObject *)__pyx_t_14);
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer);
+    __pyx_t_16 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer, (PyObject*)__pyx_t_15, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+    if (unlikely(__pyx_t_16 < 0)) {
+      PyErr_Fetch(&__pyx_t_17, &__pyx_t_18, &__pyx_t_19);
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer, (PyObject*)__pyx_v_divergence_steps_np, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+        Py_XDECREF(__pyx_t_17); Py_XDECREF(__pyx_t_18); Py_XDECREF(__pyx_t_19);
+        __Pyx_RaiseBufferFallbackError();
+      } else {
+        PyErr_Restore(__pyx_t_17, __pyx_t_18, __pyx_t_19);
+      }
+    }
+    __pyx_pybuffernd_divergence_steps_np.diminfo[0].strides = __pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_divergence_steps_np.diminfo[0].shape = __pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_divergence_steps_np.diminfo[1].strides = __pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_divergence_steps_np.diminfo[1].shape = __pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer.shape[1];
+    if (unlikely(__pyx_t_16 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
+  }
+  __pyx_t_15 = 0;
+  __pyx_v_divergence_steps_np = ((PyArrayObject *)__pyx_t_14);
+  __pyx_t_14 = 0;
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":44
+ *     divergence_steps_np = np.zeros([Ny, Nx], dtype=np.uint8)
+ *     # Copy elements from allocated memory to numpy array
+ *     for i in range(Nx):             # <<<<<<<<<<<<<<
+ *         for j in range(Ny):
+ *             divergence_steps_np[j][i] = divergence_steps[j][i]
+ */
+  __pyx_t_2 = __pyx_v_Nx;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "mandelbrot/src/mandelbrot_cython.pyx":45
+ *     # Copy elements from allocated memory to numpy array
+ *     for i in range(Nx):
+ *         for j in range(Ny):             # <<<<<<<<<<<<<<
+ *             divergence_steps_np[j][i] = divergence_steps[j][i]
+ *     # Free allocated memory
+ */
+    __pyx_t_4 = __pyx_v_Ny;
+    for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+      __pyx_v_j = __pyx_t_5;
+
+      /* "mandelbrot/src/mandelbrot_cython.pyx":46
+ *     for i in range(Nx):
+ *         for j in range(Ny):
+ *             divergence_steps_np[j][i] = divergence_steps[j][i]             # <<<<<<<<<<<<<<
+ *     # Free allocated memory
+ *     PyMem_Free(divergence_steps[0])
+ */
+      __pyx_t_14 = __Pyx_PyInt_From_int(((__pyx_v_divergence_steps[__pyx_v_j])[__pyx_v_i])); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 46, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_14);
+      __pyx_t_13 = __Pyx_GetItemInt(((PyObject *)__pyx_v_divergence_steps_np), __pyx_v_j, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 46, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_13);
+      if (unlikely(__Pyx_SetItemInt(__pyx_t_13, __pyx_v_i, __pyx_t_14, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    }
+  }
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":48
+ *             divergence_steps_np[j][i] = divergence_steps[j][i]
+ *     # Free allocated memory
+ *     PyMem_Free(divergence_steps[0])             # <<<<<<<<<<<<<<
+ *     PyMem_Free(divergence_steps)
+ *     return divergence_steps_np
+ */
+  PyMem_Free((__pyx_v_divergence_steps[0]));
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":49
+ *     # Free allocated memory
+ *     PyMem_Free(divergence_steps[0])
+ *     PyMem_Free(divergence_steps)             # <<<<<<<<<<<<<<
+ *     return divergence_steps_np
+ */
+  PyMem_Free(__pyx_v_divergence_steps);
+
+  /* "mandelbrot/src/mandelbrot_cython.pyx":50
+ *     PyMem_Free(divergence_steps[0])
+ *     PyMem_Free(divergence_steps)
+ *     return divergence_steps_np             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_INCREF(((PyObject *)__pyx_v_divergence_steps));
-  __pyx_r = ((PyArrayObject *)__pyx_v_divergence_steps);
+  __Pyx_INCREF(((PyObject *)__pyx_v_divergence_steps_np));
+  __pyx_r = ((PyArrayObject *)__pyx_v_divergence_steps_np);
   goto __pyx_L0;
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":7
+  /* "mandelbrot/src/mandelbrot_cython.pyx":8
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
@@ -1613,24 +1739,24 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_XDECREF(__pyx_t_13);
+  __Pyx_XDECREF(__pyx_t_14);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
   __Pyx_AddTraceback("mandelbrot.src.mandelbrot_cython.mandelbrot_set_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_divergence_steps_np.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_divergence_steps);
+  __Pyx_XDECREF((PyObject *)__pyx_v_divergence_steps_np);
   __Pyx_XGIVEREF((PyObject *)__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1676,41 +1802,41 @@ static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_xmax)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 1); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 1); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ymin)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 2); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 2); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ymax)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 3); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 3); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Nx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 4); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 4); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Ny)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 5); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 5); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_max_escape_time)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 6); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 6); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_divergence_criteria)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 7); __PYX_ERR(0, 7, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, 7); __PYX_ERR(0, 8, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "mandelbrot_set_cython") < 0)) __PYX_ERR(0, 7, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "mandelbrot_set_cython") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
@@ -1724,18 +1850,18 @@ static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
-    __pyx_v_xmin = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_xmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_xmax = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_xmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_ymin = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_ymin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_ymax = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_ymax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_Nx = __Pyx_PyInt_As_unsigned_int(values[4]); if (unlikely((__pyx_v_Nx == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_Ny = __Pyx_PyInt_As_unsigned_int(values[5]); if (unlikely((__pyx_v_Ny == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_max_escape_time = __Pyx_PyInt_As_unsigned_int(values[6]); if (unlikely((__pyx_v_max_escape_time == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
-    __pyx_v_divergence_criteria = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_divergence_criteria == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_xmin = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_xmin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_xmax = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_xmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_ymin = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_ymin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_ymax = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_ymax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_Nx = __Pyx_PyInt_As_unsigned_int(values[4]); if (unlikely((__pyx_v_Nx == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_Ny = __Pyx_PyInt_As_unsigned_int(values[5]); if (unlikely((__pyx_v_Ny == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_max_escape_time = __Pyx_PyInt_As_unsigned_int(values[6]); if (unlikely((__pyx_v_max_escape_time == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
+    __pyx_v_divergence_criteria = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_divergence_criteria == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 7, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("mandelbrot_set_cython", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mandelbrot.src.mandelbrot_cython.mandelbrot_set_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1754,7 +1880,7 @@ static PyObject *__pyx_pf_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_c
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("mandelbrot_set_cython", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(__pyx_v_xmin, __pyx_v_xmax, __pyx_v_ymin, __pyx_v_ymax, __pyx_v_Nx, __pyx_v_Ny, __pyx_v_max_escape_time, __pyx_v_divergence_criteria, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(__pyx_v_xmin, __pyx_v_xmax, __pyx_v_ymin, __pyx_v_ymax, __pyx_v_Nx, __pyx_v_Ny, __pyx_v_max_escape_time, __pyx_v_divergence_criteria, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3945,7 +4071,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   return 0;
@@ -4150,7 +4276,7 @@ PyMODINIT_FUNC PyInit_mandelbrot_cython(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mandelbrot/src/mandelbrot_cython.pyx":7
+  /* "mandelbrot/src/mandelbrot_cython.pyx":8
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
@@ -5639,6 +5765,33 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
     }
 }
 
+/* CIntToPy */
+        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+    const int neg_one = (int) -1, const_zero = (int) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
 /* None */
         #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -5882,33 +6035,6 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         }
     #endif
 #endif
-
-/* CIntToPy */
-        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-    const int neg_one = (int) -1, const_zero = (int) 0;
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
-                                     little, !is_unsigned);
-    }
-}
 
 /* CIntToPy */
         static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES value) {
