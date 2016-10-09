@@ -2,7 +2,7 @@
 class MandelbrotPython:
     """Class implementing a solver for the Mandelbrot set.
 
-    This class contain a calling functino for solving the Mandelbrot set in
+    This class contains a calling function for solving the Mandelbrot set in a
     specified region.
     """
 
