@@ -17,6 +17,13 @@ export PYTHONPATH=/path/to/location/lib/python3.x/site-packages:$PYTHONPATH
 ```
 where `python3.x` is set to your version of Python 3.
 
+## Running
+Typing
+```shell
+mandelbrot -h
+```
+on the shell shows the instructions on how to use the module.
+
 ## Known issues
 If the module is installed on a system trying to import the packages does not work
 while the user is in the `mandelbrot/` dir.
