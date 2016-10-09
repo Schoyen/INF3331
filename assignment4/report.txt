@@ -1,37 +1,27 @@
 ---- Cython with heap allocated arrays ----
 
-MandelbrotPython: 0 27.0318 sec
-MandelbrotPython: 1 27.6885 sec
-MandelbrotPython: 2 27.3996 sec
-MandelbrotPython: 3 26.9055 sec
-MandelbrotPython: 4 26.8018 sec
-MandelbrotNumpy: 0 21.3868 sec
-MandelbrotNumpy: 1 20.9522 sec
-MandelbrotNumpy: 2 20.9486 sec
-MandelbrotNumpy: 3 20.9439 sec
-MandelbrotNumpy: 4 20.9929 sec
-MandelbrotCython: 0 0.602195 sec
-MandelbrotCython: 1 0.607225 sec
-MandelbrotCython: 2 0.601483 sec
-MandelbrotCython: 3 0.601287 sec
-MandelbrotCython: 4 0.597852 sec
-Running time for Python: 27.17
-Running time for Numpy: 21.04
-Running time for Cython: 0.602
-Normalized running times
+This report contains the running time for the pure Python
+implementation, the Numpy implementation and the Cython
+implementation. The times are recorded using the module
+time in the script profile_mandelbrot.py.
 
+All implementations were tested against a region in the
+complex plane [xmin=-3, xmax=3], [ymin=-3, ymax=3] with
+Nx = Ny = 1000 and max_escape_time=1000 with the
+divergence_criteria=2. The average times are calculated
+five rounds for each implementation.
+
+The normalized running times are compared to the
+average Python runtime.
+
+---- ********************************* ----
+
+Average running time for the three implementations.
+Running time for Python: 27.17 sec
+Running time for Numpy: 21.04 sec
+Running time for Cython: 0.602 sec
+
+Normalized running times
 Python: 1.0
 Numpy:  0.7747
 Cython: 0.02216
-
-
----- Cython with numpy arrays ----
-
-Running time for Python: 26.81
-Running time for Numpy: 20.67
-Running time for Cython: 14.23
-Normalized running times
-
-Python: 1.0
-Numpy:  0.7709
-Cython: 0.5308
