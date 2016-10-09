@@ -1,7 +1,7 @@
 from sys import argv
 from argparse import ArgumentParser
 from . import MandelbrotPython, MandelbrotCython, MandelbrotNumpy, compute_mandelbrot
-from matplotlib.pylab import imshow, show
+from matplotlib.pylab import imshow, show, xlabel, ylabel, rc, xticks, yticks
 
 def main():
     """Function being run when typing mandelbrot on the command line.
@@ -41,7 +41,4 @@ def main():
     args = parser.parse_args()
     arg_list = args.coords + args.steps
     mat = compute_mandelbrot(*arg_list, mandelbrot_class=args.func, plot_filename=args.filename,
-            max_escape_time=args.escape_time, divergence_criteria=args.divergence_criteria)
-    if args.show:
-        imshow(mat)
-        show()
+            max_escape_time=args.escape_time, divergence_criteria=args.divergence_criteria, show_image=args.show)
