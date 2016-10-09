@@ -7,21 +7,21 @@ class MandelbrotPython:
         self.max_escape_time = max_escape_time
         self.divergence_criteria = divergence_criteria
 
+    def __call__(self):
         self.mandelbrot_set = [[0 for i in range(self.Nx)] for j in range(self.Ny)]
         self.dx = (self.xmax - self.xmin)/float(self.Nx - 1)
         self.dy = (self.ymax - self.ymin)/float(self.Ny - 1)
-
-    def __call__(self):
         div = self.divergence_criteria**2
-        for j in range(self.Ny):
-            for i in range(self.Nx):
-                x = c_real = self.xmin + i*self.dx
-                y = c_imag = self.ymin + j*self.dy
-                abs_z_squared = x*x + y*y
-                while self.mandelbrot_set[j][i] < self.max_escape_time and abs_z_squared < div:
-                    self.mandelbrot_set[j][i] += 1
-                    x, y = (x*x - y*y + c_real, 2*x*y + c_imag)
-                    abs_z_squared = x*x + y*y
+        for i in range(self.Nx):
+            c_real = self.xmin + i*self.dx
+            for j in range(self.Ny):
+                c_imag = self.ymin + j*self.dy
+                z_real = z_imag = 0.0
+                for k in range(1, self.max_escape_time + 1):
+                    z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
+                    if (z_real*z_real + z_imag*z_imag) > div:
+                        break
+                    self.mandelbrot_set[j][i] = k
         return self.mandelbrot_set
 
 if __name__ == '__main__':
