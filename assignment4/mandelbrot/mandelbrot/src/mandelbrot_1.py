@@ -23,9 +23,3 @@ class MandelbrotPython:
                         break
                     self.mandelbrot_set[j][i] = k
         return self.mandelbrot_set
-
-if __name__ == '__main__':
-    from matplotlib.pylab import imshow, show
-    mp = MandelbrotPython(-2, 0.5, -1, 1, 100, 200)
-    imshow(mp())
-    show()
