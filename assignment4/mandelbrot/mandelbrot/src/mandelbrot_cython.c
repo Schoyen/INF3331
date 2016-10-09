@@ -1071,10 +1071,7 @@ static Py_ssize_t __Pyx_minusones[] = {-1, -1, -1, -1, -1, -1, -1, -1};
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 /* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
-
-/* None.proto */
-static CYTHON_INLINE long __Pyx_pow_long(long, long);
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value);
 
 /* None.proto */
 #if CYTHON_CCOMPLEX
@@ -1180,7 +1177,13 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 #endif
 
 /* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+/* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES value);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
@@ -1242,7 +1245,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 /* Module declarations from 'cython' */
 
 /* Module declarations from 'mandelbrot.src.mandelbrot_cython' */
-static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double, double, double, double, int, int, int, int, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double, double, double, double, unsigned int, unsigned int, unsigned int, double, int __pyx_skip_dispatch); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t = { "uint8_t", NULL, sizeof(__pyx_t_5numpy_uint8_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_5numpy_uint8_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_5numpy_uint8_t), 0 };
 #define __Pyx_MODULE_NAME "mandelbrot.src.mandelbrot_cython"
 int __pyx_module_is_main_mandelbrot__src__mandelbrot_cython = 0;
@@ -1301,7 +1304,7 @@ static PyObject *__pyx_n_s_xmin;
 static PyObject *__pyx_n_s_ymax;
 static PyObject *__pyx_n_s_ymin;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, int __pyx_v_Nx, int __pyx_v_Ny, int __pyx_v_max_escape_time, int __pyx_v_divergence_criteria); /* proto */
+static PyObject *__pyx_pf_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, unsigned int __pyx_v_Nx, unsigned int __pyx_v_Ny, unsigned int __pyx_v_max_escape_time, double __pyx_v_divergence_criteria); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1315,12 +1318,12 @@ static PyObject *__pyx_tuple__6;
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
- *         double xmin, double xmax, double ymin, double ymax, int Nx, int Ny,
- *         int max_escape_time, int divergence_criteria):
+ *         double xmin, double xmax, double ymin, double ymax, unsigned int Nx, unsigned int Ny,
+ *         unsigned int max_escape_time, double divergence_criteria):
  */
 
 static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_cython(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, int __pyx_v_Nx, int __pyx_v_Ny, int __pyx_v_max_escape_time, int __pyx_v_divergence_criteria, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, unsigned int __pyx_v_Nx, unsigned int __pyx_v_Ny, unsigned int __pyx_v_max_escape_time, double __pyx_v_divergence_criteria, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_dx;
   CYTHON_UNUSED double __pyx_v_dy;
   double __pyx_v_c_real;
@@ -1328,9 +1331,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
   double __pyx_v_z_real;
   double __pyx_v_z_imag;
   double __pyx_v_div;
-  int __pyx_v_i;
-  int __pyx_v_j;
-  int __pyx_v_k;
+  unsigned int __pyx_v_i;
+  unsigned int __pyx_v_j;
+  unsigned int __pyx_v_k;
   PyArrayObject *__pyx_v_divergence_steps = 0;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_divergence_steps;
   __Pyx_Buffer __pyx_pybuffer_divergence_steps;
@@ -1347,13 +1350,14 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
   PyObject *__pyx_t_11 = NULL;
-  int __pyx_t_12;
-  int __pyx_t_13;
-  int __pyx_t_14;
-  long __pyx_t_15;
-  int __pyx_t_16;
-  double __pyx_t_17;
-  int __pyx_t_18;
+  unsigned int __pyx_t_12;
+  unsigned int __pyx_t_13;
+  unsigned int __pyx_t_14;
+  unsigned int __pyx_t_15;
+  long __pyx_t_16;
+  unsigned int __pyx_t_17;
+  double __pyx_t_18;
+  int __pyx_t_19;
   __Pyx_RefNannySetupContext("mandelbrot_set_cython", 0);
   __pyx_pybuffer_divergence_steps.pybuffer.buf = NULL;
   __pyx_pybuffer_divergence_steps.refcount = 0;
@@ -1362,7 +1366,7 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
 
   /* "mandelbrot/src/mandelbrot_cython.pyx":12
  *     cdef double dx, dy, c_real, c_imag, z_real, z_imag, div
- *     cdef int i, j, k
+ *     cdef unsigned int i, j, k
  *     dx = (xmax - xmin)/float(Nx - 1)             # <<<<<<<<<<<<<<
  *     dy = (ymax - ymin)/float(Ny - 1)
  *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
@@ -1375,7 +1379,7 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
   __pyx_v_dx = (__pyx_t_1 / ((double)(__pyx_v_Nx - 1)));
 
   /* "mandelbrot/src/mandelbrot_cython.pyx":13
- *     cdef int i, j, k
+ *     cdef unsigned int i, j, k
  *     dx = (xmax - xmin)/float(Nx - 1)
  *     dy = (ymax - ymin)/float(Ny - 1)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
@@ -1400,9 +1404,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
   __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_Ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Ny); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_Nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_unsigned_int(__pyx_v_Nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -1460,7 +1464,7 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  * 
  *     for i in range(Nx):
  */
-  __pyx_v_div = __Pyx_pow_long(((long)__pyx_v_divergence_criteria), 2);
+  __pyx_v_div = pow(__pyx_v_divergence_criteria, 2.0);
 
   /* "mandelbrot/src/mandelbrot_cython.pyx":18
  *     div = divergence_criteria**2
@@ -1469,9 +1473,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *         c_real = xmin + i*dx
  *         for j in range(Ny):
  */
-  __pyx_t_8 = __pyx_v_Nx;
-  for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_8; __pyx_t_12+=1) {
-    __pyx_v_i = __pyx_t_12;
+  __pyx_t_12 = __pyx_v_Nx;
+  for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+    __pyx_v_i = __pyx_t_13;
 
     /* "mandelbrot/src/mandelbrot_cython.pyx":19
  * 
@@ -1489,9 +1493,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *             c_imag = ymin + j*dx
  *             z_real = 0.0
  */
-    __pyx_t_13 = __pyx_v_Ny;
-    for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
-      __pyx_v_j = __pyx_t_14;
+    __pyx_t_14 = __pyx_v_Ny;
+    for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
+      __pyx_v_j = __pyx_t_15;
 
       /* "mandelbrot/src/mandelbrot_cython.pyx":21
  *         c_real = xmin + i*dx
@@ -1527,9 +1531,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
  *                 if (z_real*z_real + z_imag*z_imag) > div:
  */
-      __pyx_t_15 = (__pyx_v_max_escape_time + 1);
-      for (__pyx_t_16 = 1; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
-        __pyx_v_k = __pyx_t_16;
+      __pyx_t_16 = (__pyx_v_max_escape_time + 1);
+      for (__pyx_t_17 = 1; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+        __pyx_v_k = __pyx_t_17;
 
         /* "mandelbrot/src/mandelbrot_cython.pyx":25
  *             z_imag = 0.0
@@ -1539,9 +1543,9 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *                     break
  */
         __pyx_t_1 = (((__pyx_v_z_real * __pyx_v_z_real) - (__pyx_v_z_imag * __pyx_v_z_imag)) + __pyx_v_c_real);
-        __pyx_t_17 = (((2.0 * __pyx_v_z_real) * __pyx_v_z_imag) + __pyx_v_c_imag);
+        __pyx_t_18 = (((2.0 * __pyx_v_z_real) * __pyx_v_z_imag) + __pyx_v_c_imag);
         __pyx_v_z_real = __pyx_t_1;
-        __pyx_v_z_imag = __pyx_t_17;
+        __pyx_v_z_imag = __pyx_t_18;
 
         /* "mandelbrot/src/mandelbrot_cython.pyx":26
  *             for k in range(1, max_escape_time + 1):
@@ -1550,8 +1554,8 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *                     break
  *                 divergence_steps[j][i] = k
  */
-        __pyx_t_18 = ((((__pyx_v_z_real * __pyx_v_z_real) + (__pyx_v_z_imag * __pyx_v_z_imag)) > __pyx_v_div) != 0);
-        if (__pyx_t_18) {
+        __pyx_t_19 = ((((__pyx_v_z_real * __pyx_v_z_real) + (__pyx_v_z_imag * __pyx_v_z_imag)) > __pyx_v_div) != 0);
+        if (__pyx_t_19) {
 
           /* "mandelbrot/src/mandelbrot_cython.pyx":27
  *                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
@@ -1577,11 +1581,11 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  *                 divergence_steps[j][i] = k             # <<<<<<<<<<<<<<
  *     return divergence_steps
  */
-        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_k); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_k); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_5 = __Pyx_GetItemInt(((PyObject *)__pyx_v_divergence_steps), __pyx_v_j, int, 1, __Pyx_PyInt_From_int, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_GetItemInt(((PyObject *)__pyx_v_divergence_steps), __pyx_v_j, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        if (unlikely(__Pyx_SetItemInt(__pyx_t_5, __pyx_v_i, __pyx_t_6, int, 1, __Pyx_PyInt_From_int, 0, 0, 0) < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+        if (unlikely(__Pyx_SetItemInt(__pyx_t_5, __pyx_v_i, __pyx_t_6, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0) < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -1603,8 +1607,8 @@ static PyArrayObject *__pyx_f_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_s
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
- *         double xmin, double xmax, double ymin, double ymax, int Nx, int Ny,
- *         int max_escape_time, int divergence_criteria):
+ *         double xmin, double xmax, double ymin, double ymax, unsigned int Nx, unsigned int Ny,
+ *         unsigned int max_escape_time, double divergence_criteria):
  */
 
   /* function exit code */
@@ -1639,10 +1643,10 @@ static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_
   double __pyx_v_xmax;
   double __pyx_v_ymin;
   double __pyx_v_ymax;
-  int __pyx_v_Nx;
-  int __pyx_v_Ny;
-  int __pyx_v_max_escape_time;
-  int __pyx_v_divergence_criteria;
+  unsigned int __pyx_v_Nx;
+  unsigned int __pyx_v_Ny;
+  unsigned int __pyx_v_max_escape_time;
+  double __pyx_v_divergence_criteria;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("mandelbrot_set_cython (wrapper)", 0);
@@ -1724,10 +1728,10 @@ static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_
     __pyx_v_xmax = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_xmax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
     __pyx_v_ymin = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_ymin == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
     __pyx_v_ymax = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_ymax == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_Nx = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_Nx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_Ny = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_Ny == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
-    __pyx_v_max_escape_time = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_max_escape_time == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
-    __pyx_v_divergence_criteria = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_divergence_criteria == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_Nx = __Pyx_PyInt_As_unsigned_int(values[4]); if (unlikely((__pyx_v_Nx == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
+    __pyx_v_Ny = __Pyx_PyInt_As_unsigned_int(values[5]); if (unlikely((__pyx_v_Ny == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
+    __pyx_v_max_escape_time = __Pyx_PyInt_As_unsigned_int(values[6]); if (unlikely((__pyx_v_max_escape_time == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_divergence_criteria = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_divergence_criteria == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
@@ -1744,7 +1748,7 @@ static PyObject *__pyx_pw_10mandelbrot_3src_17mandelbrot_cython_1mandelbrot_set_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, int __pyx_v_Nx, int __pyx_v_Ny, int __pyx_v_max_escape_time, int __pyx_v_divergence_criteria) {
+static PyObject *__pyx_pf_10mandelbrot_3src_17mandelbrot_cython_mandelbrot_set_cython(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_xmin, double __pyx_v_xmax, double __pyx_v_ymin, double __pyx_v_ymax, unsigned int __pyx_v_Nx, unsigned int __pyx_v_Ny, unsigned int __pyx_v_max_escape_time, double __pyx_v_divergence_criteria) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4150,8 +4154,8 @@ PyMODINIT_FUNC PyInit_mandelbrot_cython(void)
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(             # <<<<<<<<<<<<<<
- *         double xmin, double xmax, double ymin, double ymax, int Nx, int Ny,
- *         int max_escape_time, int divergence_criteria):
+ *         double xmin, double xmax, double ymin, double ymax, unsigned int Nx, unsigned int Ny,
+ *         unsigned int max_escape_time, double divergence_criteria):
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -5609,55 +5613,30 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
 }
 
 /* CIntToPy */
-        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-    const int neg_one = (int) -1, const_zero = (int) 0;
+        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value) {
+    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
     const int is_unsigned = neg_one > const_zero;
     if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
+        if (sizeof(unsigned int) < sizeof(long)) {
             return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
+        } else if (sizeof(unsigned int) <= sizeof(unsigned long)) {
             return PyLong_FromUnsignedLong((unsigned long) value);
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+        } else if (sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG)) {
             return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
         }
     } else {
-        if (sizeof(int) <= sizeof(long)) {
+        if (sizeof(unsigned int) <= sizeof(long)) {
             return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+        } else if (sizeof(unsigned int) <= sizeof(PY_LONG_LONG)) {
             return PyLong_FromLongLong((PY_LONG_LONG) value);
         }
     }
     {
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
+        return _PyLong_FromByteArray(bytes, sizeof(unsigned int),
                                      little, !is_unsigned);
     }
-}
-
-/* None */
-        static CYTHON_INLINE long __Pyx_pow_long(long b, long e) {
-    long t = b;
-    switch (e) {
-        case 3:
-            t *= b;
-        case 2:
-            t *= b;
-        case 1:
-            return t;
-        case 0:
-            return 1;
-    }
-    #if 1
-    if (unlikely(e<0)) return 0;
-    #endif
-    t = 1;
-    while (likely(e)) {
-        t *= (b * (e&1)) | ((~e)&1);
-        b *= b;
-        e >>= 1;
-    }
-    return t;
 }
 
 /* None */
@@ -5905,6 +5884,33 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
 #endif
 
 /* CIntToPy */
+        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+    const int neg_one = (int) -1, const_zero = (int) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
+/* CIntToPy */
         static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES value) {
     const enum NPY_TYPES neg_one = (enum NPY_TYPES) -1, const_zero = (enum NPY_TYPES) 0;
     const int is_unsigned = neg_one > const_zero;
@@ -5929,6 +5935,191 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         return _PyLong_FromByteArray(bytes, sizeof(enum NPY_TYPES),
                                      little, !is_unsigned);
     }
+}
+
+/* CIntFromPy */
+        static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
+    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(unsigned int) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(unsigned int, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (unsigned int) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (unsigned int) 0;
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned int, digit, digits[0])
+                case 2:
+                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 2 * PyLong_SHIFT) {
+                            return (unsigned int) (((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 3 * PyLong_SHIFT) {
+                            return (unsigned int) (((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) >= 4 * PyLong_SHIFT) {
+                            return (unsigned int) (((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                        }
+                    }
+                    break;
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (unsigned int) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if (sizeof(unsigned int) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned long, PyLong_AsUnsignedLong(x))
+            } else if (sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            const digit* digits = ((PyLongObject*)x)->ob_digit;
+            switch (Py_SIZE(x)) {
+                case  0: return (unsigned int) 0;
+                case -1: __PYX_VERIFY_RETURN_INT(unsigned int, sdigit, (sdigit) (-(sdigit)digits[0]))
+                case  1: __PYX_VERIFY_RETURN_INT(unsigned int,  digit, +digits[0])
+                case -2:
+                    if (8 * sizeof(unsigned int) - 1 > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 2:
+                    if (8 * sizeof(unsigned int) > 1 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 2 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case -3:
+                    if (8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 3:
+                    if (8 * sizeof(unsigned int) > 2 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 3 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case -4:
+                    if (8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned int) (((unsigned int)-1)*(((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+                case 4:
+                    if (8 * sizeof(unsigned int) > 3 * PyLong_SHIFT) {
+                        if (8 * sizeof(unsigned long) > 4 * PyLong_SHIFT) {
+                            __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if (8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT) {
+                            return (unsigned int) ((((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                        }
+                    }
+                    break;
+            }
+#endif
+            if (sizeof(unsigned int) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, long, PyLong_AsLong(x))
+            } else if (sizeof(unsigned int) <= sizeof(PY_LONG_LONG)) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, PY_LONG_LONG, PyLong_AsLongLong(x))
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            unsigned int val;
+            PyObject *v = __Pyx_PyNumber_IntOrLong(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (unsigned int) -1;
+        }
+    } else {
+        unsigned int val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (unsigned int) -1;
+        val = __Pyx_PyInt_As_unsigned_int(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to unsigned int");
+    return (unsigned int) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to unsigned int");
+    return (unsigned int) -1;
 }
 
 /* CIntFromPy */

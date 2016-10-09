@@ -5,10 +5,10 @@ cimport cython
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(
-        double xmin, double xmax, double ymin, double ymax, int Nx, int Ny,
-        int max_escape_time, int divergence_criteria):
+        double xmin, double xmax, double ymin, double ymax, unsigned int Nx, unsigned int Ny,
+        unsigned int max_escape_time, double divergence_criteria):
     cdef double dx, dy, c_real, c_imag, z_real, z_imag, div
-    cdef int i, j, k
+    cdef unsigned int i, j, k
     dx = (xmax - xmin)/float(Nx - 1)
     dy = (ymax - ymin)/float(Ny - 1)
     cdef np.ndarray[np.uint8_t, ndim=2] divergence_steps
