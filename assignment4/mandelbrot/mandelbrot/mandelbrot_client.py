@@ -22,8 +22,8 @@ def main():
             help="The path and filename of an image with the mandelbrot set")
     parent_parser.add_argument("-e", "--escape-time", metavar="escape-time", type=int, nargs='?',
             help="The max escape time before determining convergence (default=1000)", default=1000)
-    parent_parser.add_argument("-d", "--divergence-criteria", metavar="divergence-criteria", type=int, nargs='?',
-            help="The divergence criteria for the Mandelbrot set (default=2)", default=2)
+    parent_parser.add_argument("-d", "--divergence-criteria", metavar="divergence-criteria", type=float, nargs='?',
+            help="The divergence criteria for the Mandelbrot set (default=2.0)", default=2.0)
     python_parser = subparser.add_parser('python', help='Create the Mandelbrot set using Python', parents=[parent_parser])
     python_parser.set_defaults(func=MandelbrotPython)
     cython_parser = subparser.add_parser('cython', help='Create the Mandelbrot set using Cython', parents=[parent_parser])

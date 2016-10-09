@@ -12,12 +12,13 @@ class MandelbrotPython:
         self.dy = (self.ymax - self.ymin)/float(self.Ny - 1)
 
     def __call__(self):
+        div = self.divergence_criteria**2
         for j in range(self.Ny):
             for i in range(self.Nx):
                 x = c_real = self.xmin + i*self.dx
                 y = c_imag = self.ymin + j*self.dy
                 abs_z_squared = x*x + y*y
-                while self.mandelbrot_set[j][i] < self.max_escape_time and abs_z_squared < self.divergence_criteria**2:
+                while self.mandelbrot_set[j][i] < self.max_escape_time and abs_z_squared < div:
                     self.mandelbrot_set[j][i] += 1
                     x, y = (x*x - y*y + c_real, 2*x*y + c_imag)
                     abs_z_squared = x*x + y*y
