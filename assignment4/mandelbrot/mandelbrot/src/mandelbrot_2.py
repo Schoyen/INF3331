@@ -9,7 +9,7 @@ class MandelbrotNumpy:
         self.max_escape_time = max_escape_time
         self.divergence_criteria = divergence_criteria
 
-    @profile
+    #@profile # For line_profiler
     def __call__(self):
         c_complex, c_real = ogrid[self.ymin:self.ymax:self.Ny*1j, self.xmin:self.xmax:self.Nx*1j]
         c = c_real + 1j*c_complex
