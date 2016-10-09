@@ -1,7 +1,0 @@
-include README.rst
-include setup.cfg
-prune __pycache__
-prune build
-recursive-include mandelbrot *.py
-recursive-include mandelbrot setup.cfg
-recursive-exclude *.egg-info *
