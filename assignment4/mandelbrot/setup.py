@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 
 def read_doc():
     """Function used for long description in setup."""
-    with open("README.rst", 'r') as f:
+    with open("README.md", 'r') as f:
         return f.read()
 
 setup(name="mandelbrot",
