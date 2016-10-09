@@ -8,6 +8,7 @@ max_iterations = 1000
 divergence = 2
 time_list = []
 
+
 for func in function_map:
     time_list.append([])
     for i in range(5):
@@ -16,9 +17,9 @@ for func in function_map:
         mat = mp()
         t1 = time()
         time_list[-1].append(t1 - t0)
-        print ("%s: %d" % (mp.__class__.__name__, i))
-#    imshow(mat)
-#    show()
+        print ("%s: %d %g sec" % (mp.__class__.__name__, i, time_list[-1][-1]))
+        imshow(mat)
+        show()
 
 
 python_avg = sum(time_list[0])/5.0

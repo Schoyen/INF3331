@@ -1,3 +1,32 @@
+---- Cython with heap allocated arrays ----
+
+MandelbrotPython: 0 27.0318 sec
+MandelbrotPython: 1 27.6885 sec
+MandelbrotPython: 2 27.3996 sec
+MandelbrotPython: 3 26.9055 sec
+MandelbrotPython: 4 26.8018 sec
+MandelbrotNumpy: 0 21.3868 sec
+MandelbrotNumpy: 1 20.9522 sec
+MandelbrotNumpy: 2 20.9486 sec
+MandelbrotNumpy: 3 20.9439 sec
+MandelbrotNumpy: 4 20.9929 sec
+MandelbrotCython: 0 0.602195 sec
+MandelbrotCython: 1 0.607225 sec
+MandelbrotCython: 2 0.601483 sec
+MandelbrotCython: 3 0.601287 sec
+MandelbrotCython: 4 0.597852 sec
+Running time for Python: 27.17
+Running time for Numpy: 21.04
+Running time for Cython: 0.602
+Normalized running times
+
+Python: 1.0
+Numpy:  0.7747
+Cython: 0.02216
+
+
+---- Cython with numpy arrays ----
+
 Running time for Python: 26.81
 Running time for Numpy: 20.67
 Running time for Cython: 14.23
