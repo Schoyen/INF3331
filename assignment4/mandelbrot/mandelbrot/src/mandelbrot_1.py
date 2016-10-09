@@ -23,3 +23,7 @@ class MandelbrotPython:
                         break
                     self.mandelbrot_set[j][i] = k
         return self.mandelbrot_set
+
+if __name__ == '__main__':
+    mp = MandelbrotPython(-3, 3, -3, 3, 1000, 1000)
+    mp()
