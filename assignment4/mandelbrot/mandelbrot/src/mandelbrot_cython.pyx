@@ -39,11 +39,6 @@ cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(
     # Make memory contiguous
     for i in range(1, Ny):
         divergence_steps[i] = divergence_steps[i - 1] + Nx
-    # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
-    for j in range(Ny):
-        for i in range(Nx):
-            divergence_steps[j][i] = 0
-
     cdef double div = divergence_criteria**2 # Use the square of the divergence criteria to avoid the square root
 
     for j in range(Ny):
@@ -52,6 +47,8 @@ cpdef np.ndarray[np.uint8_t, ndim=2] mandelbrot_set_cython(
             c_real = xmin + i*dx
             z_real = 0.0
             z_imag = 0.0
+            # Set all elements in memory to zero (PyMem_Calloc did not work on my computer)
+            divergence_steps[j][i] = 0
             for k in range(1, max_escape_time + 1):
                 z_real, z_imag = (z_real*z_real - z_imag*z_imag + c_real, 2*z_real*z_imag + c_imag)
                 if (z_real*z_real + z_imag*z_imag) > div:
