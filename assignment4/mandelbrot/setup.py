@@ -2,6 +2,7 @@ from setuptools import setup, find_packages, Extension
 from Cython.Build import cythonize
 
 def read_doc():
+    """Function used for long description in setup."""
     with open("README.rst", 'r') as f:
         return f.read()
 
