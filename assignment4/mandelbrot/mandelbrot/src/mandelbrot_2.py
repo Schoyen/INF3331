@@ -1,4 +1,4 @@
-from numpy import ogrid, zeros, conj
+from numpy import ogrid, zeros, conj, less, complex64, uint8
 
 
 class MandelbrotNumpy:
@@ -12,22 +12,11 @@ class MandelbrotNumpy:
     def __call__(self):
         c_complex, c_real = ogrid[self.ymin:self.ymax:self.Ny*1j, self.xmin:self.xmax:self.Nx*1j]
         c = c_real + 1j*c_complex
-        z = zeros(c.shape, dtype=complex)
-        divergence_steps = zeros(z.shape, dtype=int)
-        for i in range(self.max_escape_time):
-            indices = z*conj(z) <= self.divergence_criteria**2 # Creating mask
+        z = zeros(c.shape, dtype=complex64)
+        divergence_steps = zeros(z.shape, dtype=uint8)
+        div = self.divergence_criteria**2
+        for i in range(1, self.max_escape_time + 1):
+            indices = less(z.real*z.real + z.imag*z.imag, div)
             z[indices] = z[indices]**2 + c[indices]
-            divergence_steps[indices] += 1
+            divergence_steps[indices] = i
         return divergence_steps
-
-
-if __name__ == '__main__':
-    from matplotlib.pylab import imshow, show, savefig
-    from time import time
-    mv = MandelbrotNumpy(-2, 0.5, -1, 1, 1000, 1000)
-    t0 = time()
-    mv()
-    t1 = time()
-    print ("Numpy: %g" % (t1 - t0))
-    #imshow(mv())
-    #show()
