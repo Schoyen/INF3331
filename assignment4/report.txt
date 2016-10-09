@@ -1,0 +1,8 @@
+Running time for Python: 26.81
+Running time for Numpy: 20.67
+Running time for Cython: 14.23
+Normalized running times
+
+Python: 1.0
+Numpy:  0.7709
+Cython: 0.5308

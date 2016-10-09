@@ -9,12 +9,29 @@ divergence = 2
 time_list = []
 
 for func in function_map:
-    mp = func(*args, max_escape_time=max_iterations)
-    t0 = time()
-    mat = mp()
-    t1 = time()
-    time_list.append(t1 - t0)
-    imshow(mat)
-    show()
+    time_list.append([])
+    for i in range(5):
+        mp = func(*args, max_escape_time=max_iterations)
+        t0 = time()
+        mat = mp()
+        t1 = time()
+        time_list[-1].append(t1 - t0)
+        print ("%s: %d" % (mp.__class__.__name__, i))
+#    imshow(mat)
+#    show()
 
-print (time_list)
+
+python_avg = sum(time_list[0])/5.0
+numpy_avg = sum(time_list[1])/5.0
+cython_avg = sum(time_list[2])/5.0
+
+print ("Running time for Python: {:.4}".format(python_avg))
+print ("Running time for Numpy: {:.4}".format(numpy_avg))
+print ("Running time for Cython: {:.4}".format(cython_avg))
+
+print ("Normalized running times")
+print ("""
+Python: {0:.4}
+Numpy:  {1:.4}
+Cython: {2:.4}
+""".format(python_avg/float(python_avg), numpy_avg/float(python_avg), cython_avg/float(python_avg)))
