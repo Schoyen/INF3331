@@ -1,0 +1,123 @@
+\documentclass[a4paper]{article}
+
+% Import some useful packages
+\usepackage[margin=0.5in]{geometry} % narrow margins
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.95}
+\usepackage{minted}
+
+\title{Peer-review of assignment 4 for \textit{INF3331-oyvinssc}}
+\author{Reviewer 1, syhd, syhd@ifi.uio.no \\
+ 		Reviewer 2, mwaandah, mwaandah@student.matnat.uio.no \\
+		Reviewer 3, steinavp, steinavp@student.matnat.uio.no}
+
+\begin{document}
+\maketitle
+
+\section{Review}\label{sec:review}
+
+System used for review:
+\\OS: Windows 10
+\\Python 3.5 (Anaconda distribution)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{General feedback}
+
+\begin{itemize}
+  \item Your code is well documented with docstring, which is great for people who will use the code. However, it might be good to also write short comments in the code as well (especially in the pure python and the numpy implementation) to make it easier for people to understand what you are trying to do. 
+  
+  \item Good usage of READNE-files!
+  
+  \item If you try to plot the complex plane for the region $x\in[-2,1], y\in[-0.5,1]$, you will see that the image plotted actually appears up-side-down. This error can easily be fixed with the \mintinline{python}{origin} parameter in the \mintinline{python}{imshow} function:\newline
+  \begin{minted}[bgcolor=LightGray, fontsize=\footnotesize]{python}
+imshow(matrix, origin='lower', extent=[xmin,xmax,ymin,ymax], interpolation='none')
+  \end{minted}
+  
+  \item Python is an object oriented language, thus it makes sense to use classes in a Python program. However, for this assignment, using classes is not really necessary, and does not make much sense from an objected-oriented point of view. The computation of the Mandelbrot function is essentially an algorithm, not an object or a concept that exists in the real world. Hence, your code would make more sense if you have implemented the three Mandelbrot implementations as simple Python functions.
+  
+  \item Not sure what operative system you use for testing the code, but when we tried to compile and run your code on a Windows computer or on an IFI-Linux machine, we got some errors. Maybe you can make the following changes in order to make your code more "cross-platform":
+  \begin{enumerate}
+    \item Compiling with your setup.py gives the error: numpy/arrayobject.h (no such file or directory) \footnote{\url{http://stackoverflow.com/questions/14657375/cython-fatal-error-numpy-arrayobject-h-no-such-file-or-directory}}. This can be avoided by adding the line: \mintinline{python}{include_dirs=[numpy.get_include()]} into the \mintinline{python}{setup} function.
+    \item When running the scripts, the \mintinline{python}{import} function gives error that it can't import from relative path. So it might be better to use absolute path in this case, by replacing the [dot] (denoting the current folder) with the \mintinline{python}{mandelbrot} package.
+    \item You've used latex to render text on your image by toggle the \mintinline{python}{usetex} option to \mintinline{python}{true}, which is great. However, on a machine that does not have latex installed, this might lead to a complete crash of Python.
+  \end{enumerate}
+  
+  \item Other than the points mentioned above, it looks like you have put a lot of efforts and care into this submission. Your code might be a little hard to follow, but you have done an amazing job to optimize the code to make your implementations faster. I am particularly astonished with your cython implementation, which is full of low-level codes with explicit memory allocation and deallocation, but I believe that that is the key to your implementation's huge performance boost. Great job!
+
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.1: Python implementation}
+\begin{itemize}
+  \item Everything works as expected. 
+  
+  \item Generally, the code is Pythonic, with the usage of list comprehension over traditional loops, as well as the usage of a class as a function (through \mintinline{python}{__call__}). However, the triple for-loop could easily be replaced by a function similar to \mintinline{python}{numpy.linspace}. This would make the code easier to read and more Pythonic.
+  
+  \item The code seems a bit too low-level with complicated code for the manipulation of complex numbers. For any calculations with complex numbers, it is much better to simply use Python's inbuilt functionality (e.g. \mintinline{python}{z=z**2+c}) rather than working on the real and the imaginary parts separately.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.2:  numpy implementation} \label{sec:assignment5.2}
+\begin{itemize}
+  \item Everything works as expected.
+  
+  \item Vectorization is used efficiently with the help of \mintinline{python}{numpy} package. However, you can optimize the code even more. In your implementation, for every iteration of the for-loop, you re-allocate and then re-initialize the entire Boolean matrix \mintinline{python}{indices}, which means that your program must go through the entire \mintinline{python}{z} matrix in every iteration of the for-loop. But this wastes a lot of CPU time since you only want to check the complex numbers that have not escaped 2 yet during the previous iteration. This can be optimized by initializing the \mintinline{python}{indices} matrix beforehand, and then modify that matrix as you go along inside the for-loop. If you try this code below, the computation time actually reduces almost by half: \newline
+\begin{minted}[bgcolor=LightGray, fontsize=\footnotesize]{python}
+#...
+indices = numpy.ones(c.shape, dtype=bool) #-- initialize all to true
+for i in range(1, self.max_escape_time + 1):
+    indices[indices] = (z[indices].real**2 + z[indices].imag**2) <= div
+    z[indices] = z[indices]**2 + c[indices]
+    divergence_steps[indices] = i
+return divergence_steps
+\end{minted}
+
+  \item Maybe you could have used \mintinline{python}{complex128} as the datatype for the complex numbers instead of just \mintinline{python}{complex64}. This would add more precision to the computation, which might be necessary if you try to zoom into a very small region on the complex plane.
+  \item report.txt contains the info requested for report2.txt.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.3: Integrated C implementation}
+\begin{itemize}
+  \item Everything works as expected.
+  \item Cython is used efficiently. Time measurement is amazing! Good usage of functions and datatypes in the C-library (especially with malloc and free). They all seem unnecessary at first, but they are essential for the great performance boost that you have. Great job!
+  \item You've made a tiny little mistake in your code inside the first for-loop where you assign to the variable \mintinline{python}{c_imag}. Instead of \mintinline{python}{c_imag = ymin + j*dx}, it should be \mintinline{python}{c_imag = ymin + j*dy}.
+  \item report.txt contains the info requested for report3.txt
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.4:  An alternative integrated C implementation}
+Not implemented.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.5: User interface}
+\begin{itemize}
+  \item Excellent! Everything works as expected. Thanks to the use of the \mintinline{python}{argparse} package, your code is short but can do so many things. Invalid inputs are handled in a very good manner. 
+  \item Minor mistake: it seems that you've forgotten to call the \mintinline{python}{main()} function in the user interface.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.6:  Packaging and unit tests}
+Both the packaging and the unit tests work as expected. See general feedback for more comments on setup.py.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.7: More color scales + art contest}
+\begin{itemize}
+  \item It seems that you haven't provided more color scales other than the default scale used by \mintinline{python}{matplotlib}.
+  \item You contest image looks alright. You may wanna zoom in a little bit to see more of the Mandelbrot's magnificence. 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 4.8: Self replication}
+The code works as expected. It's short and simple.
+
+\bibliographystyle{plain}
+\bibliography{literature}
+
+\end{document}
