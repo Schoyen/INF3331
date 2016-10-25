@@ -1,5 +1,5 @@
 from sys import argv
-from re import findall, sub, search
+from re import findall, sub
 
 def highlighter(regex, color_theme, source_code):
     return sub(regex, lambda hit: "\033[{0}m{1}\033[0m".format(color_theme, hit.group()), source_code)
