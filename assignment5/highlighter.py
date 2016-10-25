@@ -2,10 +2,7 @@ from sys import argv
 from re import findall, sub, search
 
 def highlighter(regex, color_theme, source_code):
-    hits = findall(r"%s" % regex, source_code)
-    for hit in hits:
-        source_code = sub(hit, "\033[{0}m{1}\033[0m".format(color_theme, hit), source_code)
-    return source_code
+    return sub(regex, lambda hit: "\033[{0}m{1}\033[0m".format(color_theme, hit.group()), source_code)
 
 def read_syntax(syntaxfile):
     regex_dict = {}
