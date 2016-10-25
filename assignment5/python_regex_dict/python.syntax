@@ -1,1 +1,3 @@
-"\#.*(?:$|\n)": comment
+"#.*(?:$|\n)": comment
+"(?<!#)(^|\s)def(?:\s|$)": def_function
+"(?<!#)(^|\s)(?<=def\s)[a-zA-Z_]\w*(?=\()": function_text

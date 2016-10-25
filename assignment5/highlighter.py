@@ -34,8 +34,11 @@ Usage: %s <syntaxfile> <themefile> <sourcefile>""" % argv[0])
     regex = read_syntax(syntaxfile)
     color_theme = read_theme(themefile)
     source_code = read_source(sourcefile)
+    syntax_text = {}
     for key in regex:
-        print (highlighter(regex[key], color_theme[key], source_code))
+        syntax_text[key] = highlighter(regex[key], color_theme[key], source_code)
+    print (syntax_text['def_function'])
+    print (syntax_text['function_text'])
 #    with open('test.ny', 'w') as f:
 #        for key in regex:
 #            f.write(highlighter(regex[key], color_theme[key], source_code))
