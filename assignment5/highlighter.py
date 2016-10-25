@@ -2,15 +2,10 @@ from sys import argv
 from re import findall, sub, search
 
 def highlighter(regex, color_theme, source_code):
-    new_source = ''
-    for line in source_code.split('\n'):
-        for key in regex.keys():
-            if search(r"%s" % regex[key], line):
-                replacement_string = "\033[{0}m{1}\033[0m\n".format(color_theme[key], ''.join(findall("%s" % regex[key], line)))
-                new_source += sub(r"%s" % regex[key], replacement_string, line)
-            else:
-                new_source += line + '\n'
-    print (new_source)
+    hits = findall(r"%s" % regex, source_code)
+    for hit in hits:
+        source_code = sub(hit, "\033[{0}m{1}\033[0m".format(color_theme, hit), source_code)
+    return source_code
 
 def read_syntax(syntaxfile):
     regex_dict = {}
@@ -42,6 +37,8 @@ Usage: %s <syntaxfile> <themefile> <sourcefile>""" % argv[0])
     regex = read_syntax(syntaxfile)
     color_theme = read_theme(themefile)
     source_code = read_source(sourcefile)
-    highlighter(regex, color_theme, source_code)
-#    for key in regex.keys():
-#        highlighter(regex[key], color_theme[key], source_code)
+    for key in regex:
+        print (highlighter(regex[key], color_theme[key], source_code))
+#    with open('test.ny', 'w') as f:
+#        for key in regex:
+#            f.write(highlighter(regex[key], color_theme[key], source_code))
