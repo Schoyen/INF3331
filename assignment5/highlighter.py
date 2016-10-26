@@ -1,8 +1,8 @@
 from sys import argv
-from re import findall, sub, MULTILINE
+from re import findall, sub, MULTILINE, DOTALL
 
 def highlighter(regex, color_theme, source_code):
-    return sub(regex, lambda hit: "\033[{0}m{1}\033[0m".format(color_theme, hit.group()), source_code, flags=MULTILINE)
+    return sub(regex, lambda hit: "\033[{0}m{1}\033[0m".format(color_theme, hit.group()), source_code, flags=MULTILINE|DOTALL)
 
 def _read_syntax(syntaxfile):
     regex_dict = {}
