@@ -12,6 +12,8 @@ def defedef():
 # def haha()
  # def lol()
 
+# Regular comment
+
 adef bleh()
 a = def ab():
     print ('yolo')
