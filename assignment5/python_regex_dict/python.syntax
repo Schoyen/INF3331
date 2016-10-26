@@ -1,5 +1,7 @@
 "#.*(?:$|\n)": comment
 "(?<!#)(^|\s)def(?=\s|$)": function_1
-"(?<=\[0m )[a-zA-Z_]\w*(?=\()": function_2
+"(?<=\[0m )[a-zA-Z_]\w*(?=\(|\:)": function_2
 "(?<!#)(^|\s)class(?=\s|$)": class_1
-"(?<=\[0m )[a-zA-Z_]\w*(?=\(|\:)": class_2
+"(?<=class\\033\[0m )[a-zA-Z_]\w*(?=\(|\:)": class_2
+"\".*?\"": string_1
+"\'.*?\'": string_2
