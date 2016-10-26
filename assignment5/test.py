@@ -26,14 +26,17 @@ class SubObject(MyObject):
         def 1_lol(self):
             pass
 
+def foolo:
+    pass
 def foo():
+    print ("Does this work?")
     print ("YOLO")
 
 def defedef():
     print ("Balle")
 
     def defidef():
-        print ("HAHHA")
+        print ("HAHHA..")
 
         def deffelef():
             pass
@@ -41,6 +44,16 @@ def defedef():
             def deffind():
                 pass
 
+
+"""Hallo
+
+pa deg
+"""
+
+'''Halla
+baball
+bababa
+'''
 # def haha()
  # def lol()
 
@@ -48,6 +61,7 @@ def defedef():
 
 adef bleh()
 a = def ab():
+    print ('yolo')
     print ('yolo')
 
 def a_1():
