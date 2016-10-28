@@ -5,3 +5,4 @@
 "(?<=class\\033\[0m )[a-zA-Z_]\w*(?=\(|\:)": class_2
 "\".*?\"": string_1
 "\'.*?\'": string_2
+"(?<!#)(^|\s)(?:import|from)(?=\s)": import

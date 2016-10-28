@@ -1,7 +1,10 @@
+from math import factorial
+import numpy
 
 class MyObject(object):
 
     def __init__(self, obviously):
+        from matplotlib.pylab import plot
         self.cat = obviously
 
     def __call__(self):
