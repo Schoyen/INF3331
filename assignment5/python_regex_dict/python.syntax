@@ -6,3 +6,4 @@
 "\".*?\"": string_1
 "\'.*?\'": string_2
 "(?<!#)(^|\s)(?:import|from)(?=\s)": import
+"(?<!#)(^|\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax

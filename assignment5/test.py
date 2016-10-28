@@ -1,5 +1,11 @@
 from math import factorial
-import numpy
+import numpy as np
+
+b = [1, 2, 3]
+[a for a in b]
+a = True
+a = False
+print (all(b))
 
 class MyObject(object):
 
