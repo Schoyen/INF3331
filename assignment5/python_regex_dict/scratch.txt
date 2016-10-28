@@ -1,0 +1,1 @@
+TODO: Make sure syntax highlighting works if the next character is a comment '#'.

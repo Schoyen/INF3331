@@ -3,11 +3,12 @@ import numpy as np
 
 b = [1, 2, 3]
 [a for a in b]
-a = True
-a = False
-hallo = None
+#a = True
+a = False#does this work?
+#hallo = None
 print (all(b))
 
+@override
 class MyObject(object):
 
     def __init__(self, obviously):
@@ -17,8 +18,12 @@ class MyObject(object):
     def __call__(self):
         pass
 
+@public
+@
+@ test
+# @test
 class SubObject(MyObject):
-
+    @x.get
     def __init__(self, obviously):
         self.__init__(obviously)
 
