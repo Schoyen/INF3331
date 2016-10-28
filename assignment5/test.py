@@ -5,6 +5,7 @@ b = [1, 2, 3]
 [a for a in b]
 a = True
 a = False
+hallo = None
 print (all(b))
 
 class MyObject(object):
