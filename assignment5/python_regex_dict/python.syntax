@@ -8,4 +8,4 @@
 "(?<!#)(^|\s)(?:import|from)(?=\s)": import
 "(?<!#)(^|\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax
 "(?<!#)(^|\s)[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
-"(?<!#)(^|\s)@[a-zA-Z_]?(\s|\w|\.)*(?=$|\s|\b)": decorators
+"(?<!^#)(?<!# )@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
