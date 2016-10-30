@@ -1,11 +1,11 @@
-"#.*?(?:$|\n)": comment
-"(?<!#)(^|\s)def(?=\s|$)": function_1
+"#.*?(?=$)": comment
+"(?<!^#)(?<!# )(?<!#)(?<!\w|\d)def(?=\s|$)": function_1
 "(?<=\[0m )[a-zA-Z_]\w*?(?=\(|\:)": function_2
-"(?<!#)(^|\s)class(?=\s|$)": class_1
+"(?<!^#)(?<!# )(?<!#)(?<!\w|\d)class(?=\s|$)": class_1
 "(?<=class\\033\[0m )[a-zA-Z_]\w*?(?=\(|\:)": class_2
 "\".*?\"": string_1
 "\'.*?\'": string_2
 "(?<!#)(^|\s)(?:import|from)(?=\s)": import
 "(?<!#)(^|\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax
-"(?<!#)(^|\s)[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
-"(?<!^#)(?<!# )@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
+"(?<!^#)(?<!#)(?<!# )(?<!self.)[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
+"(?<!^#)(?<!#)(?<!# )@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
