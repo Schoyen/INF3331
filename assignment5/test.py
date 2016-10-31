@@ -106,3 +106,10 @@ try:
     print (a)
 except IndexError:
     pass
+
+for a in [1, 2, 3]:
+    print (a)
+
+b = 0
+while b < 2:
+    b += 1
