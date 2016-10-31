@@ -9,3 +9,4 @@ import: 0;31
 reserved_syntax: 0;34
 variable_assignment: 0;36
 decorators: 0;96
+try_except: 0;35

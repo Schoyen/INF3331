@@ -67,7 +67,10 @@ def defedef():
             pass
 
             def deffind():
-                pass
+                try:
+                    print ("Hello")
+                except ValueError:
+                    print ('balle')
 
 
 """Hallo

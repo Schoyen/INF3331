@@ -6,6 +6,7 @@
 "\".*?\"": string_1
 "\'.*?\'": string_2
 "(?<!#)(^|\s)(?:import|from)(?=\s)": import
-"(?<!#)(^|\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax
+"(?<!^#)(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax
 "(?<!^#)(?<!#)(?<!# )(?<!self.)[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
 "(?<!^#)(?<!#)(?<!# )@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
+"(?<!^#)(?<!#)(?<!#\s)(try|except)": try_except
