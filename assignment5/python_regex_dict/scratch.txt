@@ -1,2 +1,3 @@
 TODO: Make sure syntax highlighting works if the next character is a comment '#'.
 TODO: Check if whitespaces are included in the syntax highlighting.
+TODO: Remember to add a second theme to the coloring of the syntax.
