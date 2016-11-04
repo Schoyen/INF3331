@@ -6,8 +6,8 @@
 "\".*?\"": string_1
 "\'.*?\'": string_2
 "(?<!#)(^|\s)(?:import|from)(?=\s)": import
-"(?<!^#)(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$)": reserved_syntax
-"(?<!^#)(?<!#)(?<!# )(?<!self.)\b[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
-"(?<!^#)(?<!#)(?<!# )@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
-"(?<!^#)(?<!#)(?<!#\s)(try|except)": try_except
-"(?<!^#)(?<!#)(?<!#\s)(for|while)": for_while
+"(?<!^#)(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$|\033\[\d;\d\dm#)": reserved_syntax
+"(?<!^#)(?<!#)(?<!#\s)(?<!self.)\b[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
+"(?<!^#)(?<!#)(?<!#\s)@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
+"(?<!^#)(?<!#)(?<!#\s)(try|except)(?=:|\s|$|\033\[\d;\d\d#)": try_except
+"(?<!^#)(?<!#)(?<!#\s)(for|while|pass|continue)(?=\s|$|\033\[\d;\d\dm#)": for_while

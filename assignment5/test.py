@@ -16,7 +16,7 @@ class MyObject(object):
         self.cat = obviously
 
     def __call__(self):
-        pass
+        pass#does this work?
 
 #"hello"
 # "halla"
