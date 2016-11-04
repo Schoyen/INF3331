@@ -1,0 +1,7 @@
+"//.*?(?=$)": comment_1
+"/\*.*?\*/": comment_2
+"(?<!//)(?<!//\s)(?<!/\*)(?<!/\*\s)(int|double|char|float|unsigned|void|struct|extern|typedef)(?=\s|$|\*|,|\))": variable_types
+"(?<!//)(?<!//\s)(?<!/\*)(?<!/\*\s)\b(for|while|if|else|goto|do|return|continue|break)(?=\s|$|\(|;)": control_statements
+"^#(?!include).*?(?=$)": preprocessor
+"^#(?=include).*?(?=<)": include_1
+"(?<=include \033\[0m)<.*?>": include_2
