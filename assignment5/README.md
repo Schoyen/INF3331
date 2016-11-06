@@ -9,9 +9,11 @@ similar to my editor (Vim). That has lead to the following assumptions:
 2. If a sentence is not complete, the syntax should still be highlighted.
    For example:
 
+   ```Python
        for:
            if:
                pass
+   ```
 
     Here both 'for' and 'if' should be colored.
 
