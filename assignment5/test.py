@@ -113,3 +113,13 @@ for a in [1, 2, 3]:
 b = 0
 while b < 2:
     b += 1
+
+def foo(bar):
+    return bar
+
+if a == b:
+    print ("Hurra!")
+elif a != b:
+    print ("YOLO")
+else:
+    continue
