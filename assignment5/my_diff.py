@@ -34,7 +34,7 @@ class Superdiff:
         original = self._read_from_file(original_file)
         modified = self._read_from_file(modified_file)
         subsequence = self._longest_common_subsequence(original, modified)
-        self._generate_output(subsequence, original, modified, len(original), len(modified))
+        self._generate_output(subsequence, original, modified)
         # Check if the result should be written to file or to standard out
         if self.output_file:
             self._write_to_file(self.output_file)
@@ -60,25 +60,25 @@ class Superdiff:
         for i in output:
             print(i)
 
-    def _generate_output(self, subsequence, original, modified, i, j):
-        """
-        Massive inspiration:
-        https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#Print_the_diff
-        """
-        if i > 0 and j > 0 and original[i - 1] == modified[j - 1]:
-            self._generate_output(subsequence, original, modified, i - 1, j - 1)
-            self.output.append("0 %s" % original[i - 1])
-        elif j > 0 and (i == 0 or subsequence[i][j - 1] >= subsequence[i - 1][j]):
-            self._generate_output(subsequence, original, modified, i, j - 1)
-            self.output.append("+ %s" % modified[j - 1])
-        elif i > 0 and (j == 0 or subsequence[i][j - 1] < subsequence[i - 1][j]):
-            self._generate_output(subsequence, original, modified, i - 1, j)
-            self.output.append("- %s" % original[i - 1])
-
     def _longest_common_subsequence(self, original, modified):
-        """
-        Massive inspiration:
-        https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#Computing_the_length_of_the_LCS
+        """Function used to calculate the longest common subsequence.
+
+        This function calculates the longest common subsequence from the
+        lines in the original and modified file. The function for doing
+        this is found on this wiki-article.
+        https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#LCS_function_defined
+
+        The function compares two lines against one another. If they are
+        equal the subsequence matrix at the indices of these lines gets
+        incremented by one. If not, it stores the largest value of the
+        neighbour to the left (i-1, j) or the neighbour above (i, j-1).
+
+        Args:
+            original: A list with the lines in the original file.
+            modified: A list with the lines in the modified file.
+
+        Returns:
+            array: A 2D-array with the longest common subsequence.
         """
         subsequence = zeros((len(original) + 1, len(modified) + 1))
         for i in range(1, len(original) + 1):
@@ -90,7 +90,69 @@ class Superdiff:
 
         return subsequence
 
+    def _generate_output(self, subsequence, original, modified):
+        """Function used to generate output to be written to screen.
+
+        This function does a traceback in the subsequence array. It first
+        checks if two lines are equal. If they are, that means there are
+        no change and we store the result whilst decrementing both the
+        index of the original and the modified line.
+
+        If the two lines are unequal, the function tries to find the path
+        of the largest subsequence. If it moves to the left (i-1, j) that
+        means we have removed a line. If it moves up (i, j-1) that means we
+        have added a line.
+
+        The order of what is removed and what is added is decided the by
+        the longest common subsequence algorithm.
+
+        Args:
+            subsequence: A 2D-array with the values of the longest common
+                         subsequences.
+            original: A list with the lines in the original file.
+            modified: A list with the lines in the modified file.
+        """
+        i = len(original)
+        j = len(modified)
+        while i > 0 and j > 0:
+            if original[i-1] == modified[j-1]:
+                self.output.append("0 %s" % original[i-1])
+                i -= 1; j -= 1
+            elif subsequence[i-1][j] > subsequence[i][j-1]:
+                self.output.append("- %s" % original[i-1])
+                i -= 1
+            else:
+                self.output.append("+ %s" % modified[j-1])
+                j -= 1
+
+        # Find the final removed lines first
+        while i > 0:
+            if j == 0 or subsequence[i][j-1] < subsequence[i-1][j]:
+                self.output.append("- %s" % original[i-1])
+            i -= 1
+
+        # Find the final added lines last
+        while j > 0:
+            if i == 0 or subsequence[i-1][j-1] >= subsequence[i][j-1]:
+                self.output.append("+ %s" % modified[j-1])
+            j -= 1
+
+        # Reverse the direction of self.output as the values are added
+        # backwards in the loops.
+        self.output = reversed(self.output)
+
     def _read_from_file(self, filename):
+        """Function used to read from file.
+
+        This function strips the lines for new-lines and adds all lines
+        into a list.
+
+        Args:
+            filename: The name of the file to be read.
+
+        Returns:
+            list: A list with the new-line separated lines in the file.
+        """
         with open(filename, 'r') as f:
             return [line.strip('\n') for line in f]
 
