@@ -1,0 +1,7 @@
+"//.*?(?=$)": comment_1
+"/\*.*?\*/": comment_2
+"(?<!//)(?<!//\s)(?<!/\*)class(?=\s|$)": class_1
+"(?<=class\033\[0m )\w*(?=$|{)": class_2
+"(?<!//)(?<!//\s)(?<!/\*)(int|double|char|float|unsigned|void|static)(?=\s|$|,|\))": variable_types
+"(?<!//)(?<!//\s)(?<!/\*)(private|public|protected)(?=\s|$)": security
+"(?<!//)(?<!//\s)(?<!/\*)import(?=\s|$)": import
