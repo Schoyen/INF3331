@@ -68,6 +68,12 @@ Make sure the .syntax and .theme file share the same name on the regex and ANSI 
 if __name__ == '__main__':
     try:
         syntaxfile = argv[1]
+        if syntaxfile == '--doc':
+            print (highlighter.__doc__)
+            print (_read_file.__doc__)
+            print (_read_source.__doc__)
+            print (highlight_source.__doc__)
+            exit(0)
         themefile = argv[2]
         sourcefile = argv[3]
     except IndexError:

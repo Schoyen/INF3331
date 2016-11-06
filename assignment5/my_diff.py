@@ -161,6 +161,16 @@ if __name__ == '__main__':
     from sys import argv, exit
     try:
         original_file = argv[1]
+        if original_file == '--doc':
+            print (Superdiff.__doc__)
+            print (Superdiff.__init__.__doc__)
+            print (Superdiff.__call__.__doc__)
+            print (Superdiff._write_to_file.__doc__)
+            print (Superdiff._output_to_screen.__doc__)
+            print (Superdiff._longest_common_subsequence.__doc__)
+            print (Superdiff._generate_output.__doc__)
+            print (Superdiff._read_from_file.__doc__)
+            exit(0)
         modified_file = argv[2]
     except IndexError:
         print("Usage: %s <original file> <modified file> <output file> (optional)" % argv[0])
