@@ -1,5 +1,7 @@
 # Assignment 5 - Regex
 
+![](http://imgs.xkcd.com/comics/regex_golf.png)
+
 ## Structure
 The programs highlighter.py and my\_diff.py is located in the root
 directory. To output the documentation run them with
