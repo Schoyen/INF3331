@@ -1,29 +1,62 @@
 from numpy import zeros
 
 class Superdiff:
+    """Class Superdiff implementing the longest common subsequnce function as a diff-tool.
+
+    Superdiff implements the function found here:
+    https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#LCS_function_defined
+
+    This class also contains method for reading in text from files, print the diff
+    between two files or output the result to file.
+    """
 
     def __init__(self, original_file, modified_file, output_file=None):
+        """Constructor for Superdiff.
+
+        Args:
+            original_file: The filename of the original file to be compared.
+            modified_file: The filename of the modified file to be compared to the original
+                           file.
+            output_file: The filename of an optional output file.
+        """
         self.original_file = original_file
         self.modified_file = modified_file
         self.output_file = output_file
-        self.output = []
+        self.output = [] # An empty list used to store diff-lines
 
     def __call__(self):
+        """Calling function for Superdiff.
+
+        The __call__ function takes care of calling the correct methods in order to read in
+        the data, calculate the longest common subsequence and ouputting the result to
+        screen or file.
+        """
         original = self._read_from_file(original_file)
         modified = self._read_from_file(modified_file)
         subsequence = self._longest_common_subsequence(original, modified)
         self._generate_output(subsequence, original, modified, len(original), len(modified))
+        # Check if the result should be written to file or to standard out
         if self.output_file:
             self._write_to_file(self.output_file)
         else:
             self._output_to_screen(self.output)
 
     def _write_to_file(self, filename):
+        """Function used to write the data stored in Superdiff.output to file.
+
+        Args:
+            filename: The filename of the output-file.
+        """
         with open(filename, 'w') as f:
             for i in self.output:
-                f.write("%s\n" % i)
+                f.write("%s\n" % i) # Append a new-line
 
     def _output_to_screen(self, output):
+        """Function used to write the data stored in Superdiff.output to screen.
+
+        Args:
+            output: The output to be printed.
+        """
         for i in output:
             print(i)
 
