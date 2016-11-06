@@ -1,13 +1,13 @@
 "#.*?(?=$)": comment
-"(?<!^#)(?<!# )(?<!#)(?<!\w|\d)def(?=\s|$)": function_1
+"(?<!#\s)(?<!#)\bdef(?=\s|$)": function_1
 "(?<=\[0m )[a-zA-Z_]\w*?(?=\(|\:)": function_2
-"(?<!^#)(?<!# )(?<!#)(?<!\w|\d)class(?=\s|$)": class_1
-"(?<=class\\033\[0m )[a-zA-Z_]\w*?(?=\(|\:)": class_2
+"(?<!#\s)(?<!#)\bclass(?=\s|$)": class_1
+"(?<=class\033\[0m )[a-zA-Z_]\w*?(?=\(|\:)": class_2
 "\".*?\"": string_1
 "\'.*?\'": string_2
-"(?<!#)(^|\s)(?:import|from)(?=\s)": import
-"(?<!^#)(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$|\033\[\d;\d\dm#)": reserved_syntax
-"(?<!^#)(?<!#)(?<!#\s)(?<!self.)\b[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
-"(?<!^#)(?<!#)(?<!#\s)@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
-"(?<!^#)(?<!#)(?<!#\s)(try|except)(?=:|\s|$|\033\[\d;\d\d#)": try_except
-"(?<!^#)(?<!#)(?<!#\s)(for|while|pass|continue)(?=\s|$|\033\[\d;\d\dm#)": for_while
+"(?<!#)(?<!#\s)(?:import|from)(?=\s)": import
+"(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$|\033\[\d;\d\dm#)": reserved_syntax
+"(?<!#)(?<!#\s)(?<!self.)\b[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
+"(?<!#)(?<!#\s)@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
+"(?<!#)(?<!#\s)(try|except)(?=:|\s|$|\033\[\d;\d\d#)": try_except
+"(?<!#)(?<!#\s)(for|while|pass|continue)(?=\s|$|\033\[\d;\d\dm#)": for_while
