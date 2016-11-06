@@ -15,7 +15,10 @@ similar to my editor (Vim). That has lead to the following assumptions:
                pass
    ```
 
-    Here both 'for' and 'if' should be colored.
+   Here both `for` and `if` (obviously `pass` as well) should be colored.
+3. In choosing C as one of my other languages to color, the highlighting
+   in Vim is rather boring. All the control-flow statements are colored
+   the same way, and currently I have copied that solution.
 
 ## Status
 I have currently not managed to get assumption 1 to hold for strings.
