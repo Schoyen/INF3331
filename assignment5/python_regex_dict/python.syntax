@@ -3,11 +3,11 @@
 "(?<=\[0m )[a-zA-Z_]\w*?(?=\(|\:)": function_2
 "(?<!#\s)(?<!#)\bclass(?=\s|$)": class_1
 "(?<=class\033\[0m )[a-zA-Z_]\w*?(?=\(|\:)": class_2
-"\".*?\"": string_1
-"\'.*?\'": string_2
+"(\".*?\"|\'.*?\')": string
 "(?<!#)(?<!#\s)(?:import|from)(?=\s)": import
-"(?<!#)(?<!#\s)(?:True|False|None|as|in|and|or)(?=\s|$|\033\[\d;\d\dm#)": reserved_syntax
-"(?<!#)(?<!#\s)(?<!self.)\b[a-zA-Z_]\w*?(?=\s=|=)": variable_assignment
+"(?<!#)(?<!#\s)\b(?:True|False|None|as|in|and|or|print|all)\b(?=\s|$|\033\[\d;\d\dm#|\()": reserved_syntax
+"(?<!#)(?<!#\s)(?<!self.)\b[a-zA-Z_]\w*?(?!\s==|==)(?=\s=|=)": variable_assignment
 "(?<!#)(?<!#\s)@[a-zA-Z_]?( |\w|\.)*(?=$|\s|\b)": decorators
 "(?<!#)(?<!#\s)(try|except)(?=:|\s|$|\033\[\d;\d\d#)": try_except
-"(?<!#)(?<!#\s)(for|while|pass|continue)(?=\s|$|\033\[\d;\d\dm#)": for_while
+"(?<!#)(?<!#\s)\b(for|while|pass|continue|return)\b(?=\s|$|\033\[\d;\d\dm#|:)": for_while
+"(?<!#)(?<!#\s)\b(if|elif|else)\b(?=\s|$|\033\[\d;\d\dm#|:)": control_flow
