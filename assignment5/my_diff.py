@@ -64,8 +64,9 @@ class Superdiff:
         """Function used to calculate the longest common subsequence.
 
         This function calculates the longest common subsequence from the
-        lines in the original and modified file. The function for doing
-        this is found on this wiki-article.
+        lines in the original and modified file. This function is based on
+        the formula listed at the top docstring and the pseudocode found
+        here:
         https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#LCS_function_defined
 
         The function compares two lines against one another. If they are
@@ -80,13 +81,13 @@ class Superdiff:
         Returns:
             array: A 2D-array with the longest common subsequence.
         """
-        subsequence = zeros((len(original) + 1, len(modified) + 1))
-        for i in range(1, len(original) + 1):
-            for j in range(1, len(modified) + 1):
-                if original[i - 1] == modified[j - 1]:
-                    subsequence[i][j] = subsequence[i - 1][j - 1] + 1
+        subsequence = zeros((len(original)+1, len(modified)+1))
+        for i in range(1, len(original)+1):
+            for j in range(1, len(modified)+1):
+                if original[i-1] == modified[j-1]:
+                    subsequence[i][j] = subsequence[i-1][j-1] + 1
                 else:
-                    subsequence[i][j] = max(subsequence[i][j  - 1], subsequence[i - 1][j])
+                    subsequence[i][j] = max(subsequence[i][j-1], subsequence[i-1][j])
 
         return subsequence
 
@@ -157,12 +158,14 @@ class Superdiff:
             return [line.strip('\n') for line in f]
 
 if __name__ == '__main__':
-    from sys import argv
+    from sys import argv, exit
     try:
         original_file = argv[1]
         modified_file = argv[2]
     except IndexError:
-        raise IndexError("Usage: %s <original file> <modified file> <output file> (optional)" % argv[0])
+        print("Usage: %s <original file> <modified file> <output file> (optional)" % argv[0])
+        exit(1) # EXIT_FAILURE
+
 
     try:
         sd = Superdiff(original_file, modified_file, argv[3])
