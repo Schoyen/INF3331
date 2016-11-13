@@ -1,0 +1,139 @@
+\documentclass[a4paper]{article}
+
+% Import some useful packages
+\usepackage[margin=0.5in]{geometry} % narrow margins
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.95}
+
+\title{Peer-review of assignment 5 for \textit{INF3331-oyvinssc}}
+\author{Reviewer 1,larryp, {larryp@uio.no} \\
+ 		Reviewer 2, yosiefht, {yosiefht@studen.matnat.uio.no} \\
+		Reviewer 3, henriakj, {henriakj@math.uio.no}}
+
+\begin{document}
+\maketitle
+
+
+
+
+
+
+\section{Review \emph{}}\label{sec:review}
+
+Tested on
+Ifi linux machine 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+Python 3.5.2 |Anaconda 4.2.0 (64-bit)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{General feedback}
+
+
+The programme is generally well documented and the README file gives a detailed information on how every script runs. 
+Even though some name of the files are different from the assignment given.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.1: Syntax highlighting}
+-the code is not working as expected. \\ 
+-python highlighter.py naython.syntax, naython.theme hello.ny \\ 
+it is not doing the correct output as descriped in the assignment 5.0. \\ 
+-the code is wel documented  \\
+-moreover, it checks if the correct command line arguements are provided
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.2: Python syntax} \label{sec:assignment5.2}
+python highlighter.py python\_regex\_dict/python.syntax python\_regex\_dict/python.theme test.py \\
+\\
+The python theme has different colours for each syntax.\\
+The python syntax includes the following below syntax. And regex are implemented perfect for all. \\
+1, comments: 
+     both with hash and triple quates. And it is handling perfect.\\
+2, Function definitions:
+     def and the name of its function \\
+3, Class definitions:\\
+4, Strings:\\
+5, Imports:
+    which includes also  from….import\\
+6,“Special” statements None, True, False:\\
+     including inaddition as ,in, and, or, print, all\\
+7, Variable assignments:\\
+8, Decorators:
+    decorator @ is handled \\
+9, Try/except:\\
+10, for-loops:
+    for ….in. is also  handled.\\
+11, while-loops:\\
+12, if/elif/else blocks:\\
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.3: Syntax for your favorite language}
+file test.c should be created for test purpose \\
+python highlighter.py c\_regex\_dict/c.syntax c\_regex\_dict/c.theme test.c\\
+\\
+A sufficient amount of language is covered in the themefile. The regex are captured well for different syntax and different theme colour is assigned.
+the following syntaxes have been tested :\\
+1, comments\\
+2, type of variable\\
+3, for loops\\
+4, while loops\\
+5, headers\\
+6, if else blocks\\
+7, control statements\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.4: Syntax for your second favorite language}
+
+file test.java should be created for test purpose \\
+\\
+python highlighter.py java\_regex\_dict/java.syntax java\_regex\_dict/java.theme test.java\\
+\\
+no sufficient amount of language is covered. \\
+only the following: \\
+1, comments\\
+2, type of variable : string type  is not available \\
+3, import\\
+4 key word: few such as public, static, void \\
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.5: superdiff}
+Add a review based on section \ref{sec:general_review}. \\
+original.txt and modified.txt are created for test purpose.\\
+\\
+python my\_diff.py original.txt modified.txt \\
+\\
+gives correct output.\\
+so the code is working as expected\\
+the code is very well documented. and there is no class overuse, it is only one class and sufficient functions are used. In addition it handles for incorrect inputs fom the terminal.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Assignment 5.6:  Coloring diff}
+the syntax and the theme are correctly done.\\
+\\
+python my\_diff.py original.txt modified.txt output.txt \\
+\\
+the result is written in the output.txt file\\
+\\
+python highlighter.py diff\_regex\_dict/diff.syntax diff\_regex\_dict/diff.theme output.txt\\
+\\
+will give the desired result.\\
+
+
+
+\bibliographystyle{plain}
+\bibliography{literature}
+
+\end{document}
