@@ -2,8 +2,6 @@ from pandas import read_csv
 from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend
 from numpy import zeros, arange
 
-
-
 def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None,
                      show_image=True, month="January", SAVEFIG=None):
     temperature_data = read_csv("dat/temperature.csv")
@@ -22,7 +20,7 @@ def plot_CO2(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True,
     _show_and_save(show_image, SAVEFIG)
 
 def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None,
-                                   year=2013, show_image=True SAVEFIG=None):
+                                   year=2013, show_image=True, SAVEFIG=None):
     co2_country_data = read_csv("dat/CO2_by_country.csv")
     emission_data = co2_country_data[str(year)]
     # Add a small tolerance due to float-precision
