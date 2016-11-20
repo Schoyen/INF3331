@@ -3,7 +3,7 @@ from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title
 
 def plot_temperature(month="January", tmin=None, tmax=None, ymin=None, ymax=None, SAVEFIG=None):
     temperature_data = read_csv("dat/temperature.csv")
-    plot(temperature_data["Year"].values, temperature_data[month])
+    plot(temperature_data["Year"], temperature_data[month])
     axis([tmin, tmax, ymin, ymax])
     xlabel("Year")
     ylabel("Temperature [Celsius]")
@@ -14,7 +14,7 @@ def plot_temperature(month="January", tmin=None, tmax=None, ymin=None, ymax=None
 
 def plot_CO2(tmin=None, tmax=None, ymin=None, ymax=None, SAVEFIG=None):
     co2_data = read_csv("dat/co2.csv")
-    plot(co2_data["Year"].values, co2_data["Carbon"].values)
+    plot(co2_data["Year"], co2_data["Carbon"])
     axis([tmin, tmax, ymin, ymax])
     xlabel("Year")
     ylabel("Carbon [Gkg]")
