@@ -1,6 +1,8 @@
 from pandas import read_csv
 from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend
 from numpy import zeros, arange
+import seaborn as sns
+sns.set(color_codes=True)
 
 def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None,
                      show_image=True, month="January", SAVEFIG=None):
