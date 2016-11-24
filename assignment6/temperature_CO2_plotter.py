@@ -9,7 +9,7 @@ def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None,
     temperature_data = read_csv("dat/temperature.csv")
     plot(temperature_data["Year"], temperature_data[month])
     _set_plot_info(tmin, tmax, ymin, ymax, "Year", "Temperature [Celsius]",
-                   "Average tempature for %s per year" % month)
+                   "Average temperature for %s per year" % month)
     _show_and_save(show_image, SAVEFIG)
 
 
