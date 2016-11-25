@@ -6,25 +6,44 @@
     <body>
         <h1 align="center">Visualization of CO2 measurements</h1>
 
+        {% if error %}
+        <p style="text-align:center;">
+        {% for message in error_message %}
+            {{ message }}<br>
+        {% endfor %}
+        </p>
+        {% else %}
         <p style="text-align:center;">
             <img src="data:image/png;base64,{{ image }}" alt="CO2 data" align="center">
         </p>
-        <center>
-            <form action="handle_input_co2_data" method="POST">
-                From year:
-                <input type=number step=1 min=1750 max=2050 name="tmin">
-                <br>
-                To year:
-                <input type=number step=1 min=1750 max=2050 name="tmax">
-                <br>
-                Minimum emission of carbon (in Gkg):
-                <input type=number step=100 min=0 max=10000 name="ymin">
-                <br>
-                Maximum emission of carbon (in Gkg):
-                <input type=number step=100 min=0 max=10000 name="ymax">
-                <br>
-                <input type="submit" value="Plot">
-            </form>
-        </center>
+        {% endif %}
+
+        <form action="handle_input_co2_data" method="POST">
+            <table align="center">
+                <tr>
+                    <td>From year:</td>
+                    <td><input type=number step=1 min=1750 max=2050 name="tmin" value=1750></td><br>
+                </tr>
+
+                <tr>
+                    <td>To year:</td>
+                    <td><input type=number step=1 min=1750 max=2050 name="tmax" value=2050></td><br>
+                </tr>
+
+                <tr>
+                    <td>Minimum emission of carbon (in Gkg):</td>
+                    <td><input type=number step=1 min=0 max=10000 name="ymin" value=0></td><br>
+                </tr>
+
+                <tr>
+                    <td>Maximum emission of carbon (in Gkg):</td>
+                    <td><input type=number step=1 min=0 max=10000 name="ymax" value=10000></td><br>
+                </tr>
+
+                <tr>
+                    <td><input type="submit" value="Plot"></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
