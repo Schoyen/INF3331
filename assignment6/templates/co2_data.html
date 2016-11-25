@@ -5,8 +5,26 @@
     </head>
     <body>
         <h1 align="center">Visualization of CO2 measurements</h1>
+
         <p style="text-align:center;">
-        <img src="data:image/png;base64,{{ image }}" alt="CO2 data" align="center">
+            <img src="data:image/png;base64,{{ image }}" alt="CO2 data" align="center">
         </p>
+        <center>
+            <form action="handle_input_co2_data" method="POST">
+                From year:
+                <input type=number step=1 min=1750 max=2050 name="tmin">
+                <br>
+                To year:
+                <input type=number step=1 min=1750 max=2050 name="tmax">
+                <br>
+                Minimum emission of carbon (in Gkg):
+                <input type=number step=100 min=0 max=10000 name="ymin">
+                <br>
+                Maximum emission of carbon (in Gkg):
+                <input type=number step=100 min=0 max=10000 name="ymax">
+                <br>
+                <input type="submit" value="Plot">
+            </form>
+        </center>
     </body>
 </html>
