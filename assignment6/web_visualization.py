@@ -8,7 +8,7 @@ web_app = Flask(__name__)
 def front_page():
     return render_template("index.html")
 
-@web_app.route("/co2/")
+@web_app.route("/co2_data/")
 def visualize_co2_data():
     image_file = BytesIO()
     plot_CO2(show_image=False, SAVEFIG=image_file)
@@ -30,7 +30,7 @@ def visualize_country_co2():
     plot_CO2_emissions_per_country(show_image=False, SAVEFIG=image_file)
     image_file.seek(0)
     image = b64encode(image_file.getvalue())
-    return render_template("country_co2.html", image=image)
+    return render_template("co2_by_country.html", image=image)
 
 if __name__ == '__main__':
     web_app.run(debug=True)
