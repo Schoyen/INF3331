@@ -1,11 +1,31 @@
-from pandas import read_csv, isnull
 from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend, figure, tight_layout, margins
 from numpy import zeros, arange, nan
 try:
     import seaborn as sns
     sns.set(color_codes=True)
 except ImportError:
-    pass
+    print ("""
+Import of seaborn (matplotlib wrapper) failed. Continuing with plain matplotlib.
+
+Installation:
+    Using Anaconda:
+        conda install seaborn
+    Using pip:
+        pip install seaborn
+""")
+
+try:
+    from pandas import read_csv, isnull
+except ImportError:
+    raise ImportError("""
+Import of pandas failed.
+
+Installation:
+    Using Anaconda:
+        conda install pandas
+    Using pip:
+        pip install pandas
+""")
 
 def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True, month="January", SAVEFIG=None):
     temperature_data = read_csv("dat/temperature.csv")
