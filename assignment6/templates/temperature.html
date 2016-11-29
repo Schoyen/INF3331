@@ -4,6 +4,61 @@
         <title>Visualization of temperature measurements</title>
     </head>
     <body>
-        <img src="data:image/png;base64,{{ image }}" alt="temperature data" align="middle">
+        <h1 align="center">Visualization of temperature measurements by month</h1>
+
+        {% if error %}
+        <p style="text-align:center;">
+        {% for message in error_message %}
+            {{ message }}<br>
+        {% endfor %}
+        </p>
+        {% else %}
+        <p style="text-align:center;">
+            <img src="data:image/png;base64,{{ image }}" alt="temperature data" align="center">
+        </p>
+        {% endif %}
+
+        <form action="handle_input_temperature" method="POST">
+            <table align="center">
+                <tr>
+                    <td>Month:</td>
+                    <td><select name="month">
+                            {% for month_var in ["January", "February", "March",
+                            "April", "May", "June", "July", "August", "September",
+                            "October", "November", "Desember"] %}
+                                {% if month_var==month %}
+                                    <option value={{ month_var }} selected>{{ month_var }}</option>
+                                {% else %}
+                                    <option value={{ month_var }}>{{ month_var }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>From year:</td>
+                    <td><input type=number step=1 min=1800 max=2050 name="tmin" value={{ tmin }}></td><br>
+                </tr>
+
+                <tr>
+                    <td>To year:</td>
+                    <td><input type=number step=1 min=1800 max=2050 name="tmax" value={{ tmax }}></td><br>
+                </tr>
+
+                <tr>
+                    <td>Minimum average temperature (in Celsius):</td>
+                    <td><input type=number step=1 min=-40 max=40 name="ymin" value={{ ymin }}></td><br>
+                </tr>
+
+                <tr>
+                    <td>Maximum average temperature (in Celsius):</td>
+                    <td><input type=number step=1 min=-40 max=40 name="ymax" value={{ ymax }}></td><br>
+                </tr>
+
+                <tr>
+                    <td><input type="submit" value="Plot"></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
