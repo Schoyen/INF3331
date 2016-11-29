@@ -15,7 +15,8 @@ def visualize__initial_co2_data():
     plot_CO2(show_image=False, SAVEFIG=image_file)
     image_file.seek(0)
     image = b64encode(image_file.getvalue())
-    return render_template("co2_data.html", image=image)
+    return render_template("co2_data.html", image=image,
+            tmin=1750, tmax=2050, ymin=0, ymax=10000)
 
 @web_app.route("/co2_data/handle_input_co2_data", methods=["Post"])
 def visualize_co2_data():
@@ -43,10 +44,13 @@ def visualize_co2_data():
         plot_CO2(tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax, show_image=False, SAVEFIG=image_file)
         image_file.seek(0)
         image = b64encode(image_file.getvalue())
-    return render_template("co2_data.html", image=image, error=error, error_message=error_message)
+
+    return render_template("co2_data.html", image=image,
+            error=error, error_message=error_message,
+            tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax)
 
 @web_app.route("/temperature/")
-def visualize_temperature_data():
+def visualize_initial_temperature_data():
     image_file = BytesIO()
     plot_temperature(show_image=False, SAVEFIG=image_file)
     image_file.seek(0)
