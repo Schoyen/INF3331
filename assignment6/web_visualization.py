@@ -16,7 +16,7 @@ def visualize__initial_co2_data():
     return render_template("co2_data.html", image=image,
             tmin=1750, tmax=2050, ymin=0, ymax=10000)
 
-@web_app.route("/co2_data/handle_input_co2_data", methods=["POST"])
+@web_app.route("/co2_data/handle_input", methods=["POST"])
 def visualize_co2_data(): 
     assert request.method == "POST" # Test
     clf() # Clear figure to avoid plotting on top of old image
@@ -52,7 +52,7 @@ def visualize_initial_temperature_data():
     return render_template("temperature.html", image=image,
             tmin=1800, tmax=2050, ymin=-6, ymax=1, month="January")
 
-@web_app.route("/temperature/handle_input_temperature", methods=["POST"])
+@web_app.route("/temperature/handle_input", methods=["POST"])
 def visualize_temperature_data(): 
     assert request.method == "POST" # Test that we are in POST-mode
     clf() # Clear current figure
@@ -82,13 +82,17 @@ def visualize_temperature_data():
             error=error, error_message=error_message,
             tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax, month=month)
 
-@web_app.route("/co2_by_country/")
-def visualize_country_co2(): 
-    image_file = BytesIO()
-    plot_CO2_emissions_per_country(show_image=False, SAVEFIG=image_file)
-    image_file.seek(0)
-    image = b64encode(image_file.getvalue())
+@web_app.route("/co2_by_country/handle_input")
+def visualize_initial_country_co2(): 
+    kwargs = {'show_image': False}
+    image = plot_image(plot_CO2_emissions_per_country, kwargs)
     return render_template("co2_by_country.html", image=image)
+
+#@web_app.route("/co2_by_country/")
+#def visualize_initial_country_co2(): 
+#    kwargs = {'show_image': False}
+#    image = plot_image(plot_CO2_emissions_per_country, kwargs)
+#    return render_template("co2_by_country.html", image=image)
 
 def plot_image(plot_func, kwargs): 
     image_file = BytesIO()
