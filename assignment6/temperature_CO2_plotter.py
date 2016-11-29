@@ -1,6 +1,6 @@
-from pandas import read_csv
+from pandas import read_csv, isnull
 from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend, figure
-from numpy import zeros, arange
+from numpy import zeros, arange, nan
 import seaborn as sns
 sns.set(color_codes=True)
 
@@ -23,19 +23,24 @@ def plot_CO2(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True,
 
 def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None,
                                    year=2013, show_image=True, SAVEFIG=None):
-    co2_country_data = read_csv("dat/CO2_by_country.csv")
+    co2_country_data = read_csv("dat/CO2_by_country.csv", encoding="utf-8-sig")
     emission_data = co2_country_data[str(year)]
-    # Add a small tolerance due to float-precision
-    upper_threshold = upper_threshold or max(emission_data.values) + 1e-10
+
+    # Check if upper and lower threshold is None
+    upper_threshold = upper_threshold or max(emission_data.values) + 1e-10 # Add a small tolerance due to float-precision
     lower_threshold = lower_threshold or 0
-    # Fix NAN-values in emission_data
+
+    # Set all NAN-values to -1
+    emission_data.values[isnull(emission_data.values)] = -1
     indices = (emission_data.values <= upper_threshold) & \
               (emission_data.values >= lower_threshold)
-    x_indices = arange(len(co2_country_data["Country Code"].values[indices]))
-    # Fix dynamic sizing which is reasonable
-    figure(figsize=(len(x_indices),8))
+    x_indices = arange(len(co2_country_data[u'"Country Name"'].values[indices]))
+    if len(x_indices) >= 40:
+        figure(figsize=(len(x_indices)*0.4 + 2,8))
+    else:
+        figure(figsize=(10, 8))
     bar(x_indices, emission_data.values[indices], align='center')
-    xticks(x_indices, co2_country_data["Country Code"].values[indices],
+    xticks(x_indices, co2_country_data[u'"Country Name"'].values[indices],
            rotation='vertical')
     axhline(lower_threshold, linewidth=2, color='g', label="Lower threshold")
     axhline(upper_threshold, linewidth=2, color='r', label="Upper threshold")
@@ -59,4 +64,4 @@ def _show_and_save(show_image, SAVEFIG=None):
 if __name__ == '__main__':
     plot_CO2()
     plot_temperature()
-    plot_CO2_emissions_per_country(upper_threshold=10, lower_threshold=8)
+    plot_CO2_emissions_per_country(upper_threshold=16, lower_threshold=8)
