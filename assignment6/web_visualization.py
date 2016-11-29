@@ -82,17 +82,38 @@ def visualize_temperature_data():
             error=error, error_message=error_message,
             tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax, month=month)
 
-@web_app.route("/co2_by_country/handle_input")
+@web_app.route("/co2_by_country/")
 def visualize_initial_country_co2(): 
-    kwargs = {'show_image': False}
+    lower_threshold = 8
+    upper_threshold = 16
+    year=2013
+    kwargs = {'lower_threshold': lower_threshold, 'upper_threshold': upper_threshold, 'year': 2013, 'show_image': False}
     image = plot_image(plot_CO2_emissions_per_country, kwargs)
-    return render_template("co2_by_country.html", image=image)
+    return render_template("co2_by_country.html", image=image,
+            year=year, lower_threshold=lower_threshold, upper_threshold=upper_threshold)
 
-#@web_app.route("/co2_by_country/")
-#def visualize_initial_country_co2(): 
-#    kwargs = {'show_image': False}
-#    image = plot_image(plot_CO2_emissions_per_country, kwargs)
-#    return render_template("co2_by_country.html", image=image)
+@web_app.route("/co2_by_country/handle_input", methods=["POST"])
+def visualize_country_co2(): 
+    assert request.method == "POST" # Test that we are in POST-mode
+    clf() # Clear current figure
+    image = None
+    error_message = []
+    error = False
+
+    year = int(request.form["year"])
+    lower_threshold = float(request.form["lower_threshold"])
+    upper_threshold = float(request.form["upper_threshold"])
+
+    if upper_threshold <= lower_threshold:
+        error_message.append("The upper threshold for carbon emission ({0}) must be greater than the lower threshold ({1}).".format(upper_threshold, lower_threshold))
+        error = True
+
+    if not error: 
+        kwargs = {'lower_threshold': lower_threshold, 'upper_threshold': upper_threshold, 'year': year, 'show_image': False}
+        image = plot_image(plot_CO2_emissions_per_country, kwargs)
+    return render_template("co2_by_country.html", image=image,
+            error=error, error_message=error_message,
+            year=year, lower_threshold=lower_threshold, upper_threshold=upper_threshold)
 
 def plot_image(plot_func, kwargs): 
     image_file = BytesIO()

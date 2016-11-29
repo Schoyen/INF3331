@@ -1,5 +1,5 @@
 from pandas import read_csv
-from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend
+from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend, figure
 from numpy import zeros, arange
 import seaborn as sns
 sns.set(color_codes=True)
@@ -28,9 +28,12 @@ def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None,
     # Add a small tolerance due to float-precision
     upper_threshold = upper_threshold or max(emission_data.values) + 1e-10
     lower_threshold = lower_threshold or 0
+    # Fix NAN-values in emission_data
     indices = (emission_data.values <= upper_threshold) & \
               (emission_data.values >= lower_threshold)
     x_indices = arange(len(co2_country_data["Country Code"].values[indices]))
+    # Fix dynamic sizing which is reasonable
+    figure(figsize=(len(x_indices),8))
     bar(x_indices, emission_data.values[indices], align='center')
     xticks(x_indices, co2_country_data["Country Code"].values[indices],
            rotation='vertical')

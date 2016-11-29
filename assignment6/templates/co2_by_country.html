@@ -4,6 +4,41 @@
         <title>Visualization of CO2 by countries</title>
     </head>
     <body>
-        <img src="data:image/png;base64,{{ image }}" alt="CO2 country data" align="middle">
+        <h1 align="center">Visualization of CO2 measurements by country</h1>
+
+        {% if error %}
+        <p style="text-align:center;">
+        {% for message in error_message %}
+            {{ message }}<br>
+        {% endfor %}
+        </p>
+        {% else %}
+        <p style="text-align:center;">
+            <img src="data:image/png;base64,{{ image }}" alt="CO2 country data" align="center">
+        </p>
+        {% endif %}
+
+        <form action="handle_input" method="POST">
+            <table align="center">
+                <tr>
+                    <td>Year:</td>
+                    <td><input type=number step=1 min=1960 max=2016 name="year" value={{ year }}></td><br>
+                </tr>
+
+                <tr>
+                    <td>Lower threshold for emission of carbon (in Gkg):</td>
+                    <td><input type=number step=0.1 min=0 max=100 name="lower_threshold" value={{ lower_threshold }}></td><br>
+                </tr>
+
+                <tr>
+                    <td>Upper threshold for emission of carbon (in Gkg):</td>
+                    <td><input type=number step=0.1 min=0 max=100 name="upper_threshold" value={{ upper_threshold }}></td><br>
+                </tr>
+
+                <tr>
+                    <td><input type="submit" value="Plot"></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
