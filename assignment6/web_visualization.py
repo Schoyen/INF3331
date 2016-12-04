@@ -7,10 +7,22 @@ web_app = Flask(__name__)
 
 @web_app.route("/")
 def front_page():
+    """
+    Render front page.
+
+    Returns:
+        page:               The rendered front page from templates/index.html.
+    """
     return render_template("index.html")
 
 @web_app.route("/co2_data/")
 def visualize__initial_co2_data():
+    """
+    Render site with plots showing the global CO2 emissions per year.
+
+    Returns:
+        page:               The initial rendered page with a plot of the emissions.
+    """
     clf()
     kwargs = {'show_image': False}
     image = plot_image(plot_CO2, kwargs)
@@ -19,6 +31,14 @@ def visualize__initial_co2_data():
 
 @web_app.route("/co2_data/handle_input", methods=["POST"])
 def visualize_co2_data():
+    """
+    Render site with plots showing the global CO2 emissions per year.
+
+    This function uses POST-methods.
+
+    Returns:
+        page:               The updated page with a plot of the emissions.
+    """
     assert request.method == "POST" # Test
     clf() # Clear figure to avoid plotting on top of old image
     image = None
@@ -48,6 +68,12 @@ def visualize_co2_data():
 
 @web_app.route("/temperature/")
 def visualize_initial_temperature_data():
+    """
+    Render site with plots showing the average global temperatures per year for a given month.
+
+    Returns:
+        page:               The initial page with a plot of the temperatures.
+    """
     clf()
     kwargs = {'show_image': False}
     image = plot_image(plot_temperature, kwargs)
@@ -56,6 +82,14 @@ def visualize_initial_temperature_data():
 
 @web_app.route("/temperature/handle_input", methods=["POST"])
 def visualize_temperature_data():
+    """
+    Render site with plots showing the average global temperatures per year for a given month.
+
+    This function uses POST-methods.
+
+    Returns:
+        page:               The updated page with a plot of the temperatures.
+    """
     assert request.method == "POST" # Test that we are in POST-mode
     clf() # Clear current figure
     image = None
@@ -86,6 +120,12 @@ def visualize_temperature_data():
 
 @web_app.route("/co2_by_country/")
 def visualize_initial_country_co2():
+    """
+    Render site with plots showing the CO2 emissions per country for a given year.
+
+    Returns:
+        page:               The initial page with a plot of the emissions.
+    """
     clf()
     lower_threshold = 8
     upper_threshold = 16
@@ -97,6 +137,14 @@ def visualize_initial_country_co2():
 
 @web_app.route("/co2_by_country/handle_input", methods=["POST"])
 def visualize_country_co2():
+    """
+    Render site with plots showing the CO2 emissions per country for a given year.
+
+    This function uses POST-methods.
+
+    Returns:
+        page:               The updated page with a plot of the emissions.
+    """
     assert request.method == "POST" # Test that we are in POST-mode
     clf() # Clear current figure
     image = None
@@ -119,6 +167,12 @@ def visualize_country_co2():
             year=year, lower_threshold=lower_threshold, upper_threshold=upper_threshold)
 
 def plot_image(plot_func, kwargs):
+    """
+    Save the plot in a byte buffer and return the image.
+
+    Returns:
+        image:              The plot as a byte-buffer.
+    """
     image_file = BytesIO()
     kwargs['SAVEFIG'] = image_file
     plot_func(**kwargs)
