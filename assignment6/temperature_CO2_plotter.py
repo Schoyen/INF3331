@@ -28,6 +28,18 @@ Installation:
 """)
 
 def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True, month="January", SAVEFIG=None):
+    """
+    Generate a plot of the temperatures from dat/temperature.csv.
+
+    Input:
+        tmin:               Time in years to plot from.
+        tmax:               Time in years to plot to.
+        ymin:               Temperature in Celsius to plot from.
+        ymax:               Temperature in Celsius to plot to.
+        show_image:         Bool to determine if the image should be shown.
+        month:              String with the month to plot temperatures for.
+        SAVEFIG:            Name of file to save image to.
+    """
     temperature_data = read_csv("dat/temperature.csv")
     plot(temperature_data["Year"], temperature_data[month])
     _set_plot_info(tmin, tmax, ymin, ymax, "Year", "Temperature [Celsius]", "Average temperature for %s per year" % month)
@@ -35,13 +47,33 @@ def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True
 
 
 def plot_CO2(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True, SAVEFIG=None):
+    """
+    Generate a plot of the CO2 emissions from dat/co2.csv.
+
+    Input:
+        tmin:               Time in years to plot from.
+        tmax:               Time in years to plot to.
+        ymin:               Carbon emissions to plot from.
+        ymax:               Carbon emissions to plot to.
+        show_image:         Bool to determine if the image should be shown.
+        SAVEFIG:            Name of file to save image to.
+    """
     co2_data = read_csv("dat/co2.csv")
     plot(co2_data["Year"], co2_data["Carbon"])
     _set_plot_info(tmin, tmax, ymin, ymax, "Year", "Carbon [Gkg]","Carbon emissions in giga kilograms per year")
     _show_and_save(show_image, SAVEFIG)
 
-def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None,
-                                   year=2013, show_image=True, SAVEFIG=None):
+def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None, year=2013, show_image=True, SAVEFIG=None):
+    """
+    Generate a plot of the CO2 emissions per country from dat/CO2_by_country.csv.
+
+    Input:
+        lower_threshold:    The minimum amount of emissions to plot from.
+        upper_threshold:    The maximum amount of emissions to plot to.
+        year:               The year to plot in.
+        show_image:         Bool to determine if the image should be shown.
+        SAVEFIG:            Name of file to save image to.
+    """
     co2_country_data = read_csv("dat/CO2_by_country.csv", encoding="utf-8-sig")
     emission_data = co2_country_data[str(year)]
 
@@ -71,12 +103,31 @@ def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None,
     _show_and_save(show_image, SAVEFIG)
 
 def _set_plot_info(tmin, tmax, ymin, ymax, XLABEL, YLABEL, TITLE):
+    """
+    Set axis values, title and labels in plot.
+
+    Input:
+        tmin:               The minimum x-value.
+        tmax:               The maximum x-value.
+        ymin:               The minimum y-value.
+        ymax:               The maximum y-value.
+        XLABEL:             A string with the label on the x-axis.
+        YLABEL:             A string with the label on the y-axis.
+        TITLE:              A string with the title off the plot.
+    """
     axis([tmin, tmax, ymin, ymax])
     xlabel(XLABEL)
     ylabel(YLABEL)
     title(TITLE)
 
-def _show_and_save(show_image, SAVEFIG=None):
+def _show_and_save(show_image, SAVEFIG):
+    """
+    Save image and show to screen if the user wishes.
+
+    Input:
+        show_image:         A bool determining if the image should be shown on screen.
+        SAVEFIG:            A filename to save plot to.
+    """
     if SAVEFIG:
         savefig(SAVEFIG)
     if show_image:
