@@ -1,11 +1,12 @@
 from io import BytesIO
 from base64 import b64encode
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from temperature_CO2_plotter import plot_CO2, plot_temperature, plot_CO2_emissions_per_country
 from matplotlib.pylab import clf
 web_app = Flask(__name__)
 
 @web_app.route("/")
+@web_app.route("/index")
 def front_page():
     """
     Render front page.
@@ -26,8 +27,9 @@ def visualize__initial_co2_data():
     clf()
     kwargs = {'show_image': False}
     image = plot_image(plot_CO2, kwargs)
-    return render_template("co2_data.html", image=image,
-            tmin=1750, tmax=2050, ymin=0, ymax=10000)
+    
+    return render_template("co2_data.html", image=image.decode('utf-8'),
+            tmin=1751, tmax=2012, ymin=0, ymax=10000)
 
 @web_app.route("/co2_data/handle_input", methods=["POST"])
 def visualize_co2_data():
@@ -50,6 +52,7 @@ def visualize_co2_data():
     ymin = int(request.form["ymin"])
     ymax = int(request.form["ymax"])
 
+    # error handling if min values are greater than max values
     if ymax <= ymin:
         error_message.append("The maximum carbon ({0}) emission must be greater than the minimum ({1}).".format(ymax, ymin))
         error = True
@@ -58,11 +61,12 @@ def visualize_co2_data():
         error_message.append("The final year ({0}) must be greater than the initial year ({1}).".format(tmax, tmin))
         error = True
 
+    # plots image if no errors
     if not error:
         kwargs = {'tmin': tmin, 'tmax': tmax, 'ymin': ymin, 'ymax': ymax, 'show_image': False}
         image = plot_image(plot_CO2, kwargs)
 
-    return render_template("co2_data.html", image=image,
+    return render_template("co2_data.html", image=image.decode('utf-8'),
             error=error, error_message=error_message,
             tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax)
 
@@ -77,8 +81,9 @@ def visualize_initial_temperature_data():
     clf()
     kwargs = {'show_image': False}
     image = plot_image(plot_temperature, kwargs)
-    return render_template("temperature.html", image=image,
-            tmin=1800, tmax=2050, ymin=-6, ymax=1, month="January")
+    
+    return render_template("temperature.html", image=image.decode('utf-8'),
+            tmin=1816, tmax=2012, ymin=-6, ymax=1, month="January")
 
 @web_app.route("/temperature/handle_input", methods=["POST"])
 def visualize_temperature_data():
@@ -114,7 +119,7 @@ def visualize_temperature_data():
         kwargs = {'tmin': tmin, 'tmax': tmax, 'ymin': ymin, 'ymax': ymax, 'month': month, 'show_image': False}
         image = plot_image(plot_temperature, kwargs)
 
-    return render_template("temperature.html", image=image,
+    return render_template("temperature.html", image=image.decode('utf-8'),
             error=error, error_message=error_message,
             tmin=tmin, tmax=tmax, ymin=ymin, ymax=ymax, month=month)
 
@@ -132,7 +137,8 @@ def visualize_initial_country_co2():
     year=2013
     kwargs = {'lower_threshold': lower_threshold, 'upper_threshold': upper_threshold, 'year': 2013, 'show_image': False}
     image = plot_image(plot_CO2_emissions_per_country, kwargs)
-    return render_template("co2_by_country.html", image=image,
+    
+    return render_template("co2_by_country.html", image=image.decode('utf-8'),
             year=year, lower_threshold=lower_threshold, upper_threshold=upper_threshold)
 
 @web_app.route("/co2_by_country/handle_input", methods=["POST"])
@@ -155,6 +161,7 @@ def visualize_country_co2():
     lower_threshold = float(request.form["lower_threshold"])
     upper_threshold = float(request.form["upper_threshold"])
 
+    # error handling if lower threshold is greater or equal to upper threshold
     if upper_threshold <= lower_threshold:
         error_message.append("The upper threshold for carbon emission ({0}) must be greater than the lower threshold ({1}).".format(upper_threshold, lower_threshold))
         error = True
@@ -162,9 +169,11 @@ def visualize_country_co2():
     if not error:
         kwargs = {'lower_threshold': lower_threshold, 'upper_threshold': upper_threshold, 'year': year, 'show_image': False}
         image = plot_image(plot_CO2_emissions_per_country, kwargs)
-    return render_template("co2_by_country.html", image=image,
+        
+    return render_template("co2_by_country.html", image=image.decode('utf-8'),
             error=error, error_message=error_message,
             year=year, lower_threshold=lower_threshold, upper_threshold=upper_threshold)
+
 
 def plot_image(plot_func, kwargs):
     """
@@ -173,11 +182,13 @@ def plot_image(plot_func, kwargs):
     Returns:
         image:              The plot as a byte-buffer.
     """
+    
     image_file = BytesIO()
     kwargs['SAVEFIG'] = image_file
     plot_func(**kwargs)
     image_file.seek(0)
     image = b64encode(image_file.getvalue())
+    
     return image
 
 if __name__ == '__main__':
