@@ -1,5 +1,6 @@
 from matplotlib.pylab import plot, show, axis, savefig, xlabel, ylabel, title, bar, xticks, axhline, legend, figure, tight_layout, margins
 from numpy import zeros, arange, nan
+
 try:
     import seaborn as sns
     sns.set(color_codes=True)
@@ -40,6 +41,7 @@ def plot_temperature(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True
         month:              String with the month to plot temperatures for.
         SAVEFIG:            Name of file to save image to.
     """
+    
     temperature_data = read_csv("dat/temperature.csv")
     plot(temperature_data["Year"], temperature_data[month])
     _set_plot_info(tmin, tmax, ymin, ymax, "Year", "Temperature [Celsius]", "Average temperature for %s per year" % month)
@@ -58,6 +60,7 @@ def plot_CO2(tmin=None, tmax=None, ymin=None, ymax=None, show_image=True, SAVEFI
         show_image:         Bool to determine if the image should be shown.
         SAVEFIG:            Name of file to save image to.
     """
+    
     co2_data = read_csv("dat/co2.csv")
     plot(co2_data["Year"], co2_data["Carbon"])
     _set_plot_info(tmin, tmax, ymin, ymax, "Year", "Carbon [Gkg]","Carbon emissions in giga kilograms per year")
@@ -74,6 +77,7 @@ def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None, y
         show_image:         Bool to determine if the image should be shown.
         SAVEFIG:            Name of file to save image to.
     """
+    
     co2_country_data = read_csv("dat/CO2_by_country.csv", encoding="utf-8-sig")
     emission_data = co2_country_data[str(year)]
 
@@ -84,7 +88,7 @@ def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None, y
     # Set all NAN-values to -1
     emission_data.values[isnull(emission_data.values)] = -1
     indices = (emission_data.values <= upper_threshold) & (emission_data.values >= lower_threshold)
-    x_indices = arange(len(co2_country_data[u'"Country Name"'].values[indices]))
+    x_indices = arange(len(co2_country_data["Country Name"].values[indices]))
 
     if len(x_indices) >= 40:
         figure(figsize=(len(x_indices)*0.4 + 2, 9))
@@ -92,7 +96,7 @@ def plot_CO2_emissions_per_country(lower_threshold=None, upper_threshold=None, y
         figure(figsize=(10, 9))
 
     bar(x_indices, emission_data.values[indices], align='center')
-    xticks(x_indices, co2_country_data[u'"Country Name"'].values[indices], rotation='vertical')
+    xticks(x_indices, co2_country_data["Country Name"].values[indices], rotation='vertical')
     axhline(lower_threshold, linewidth=2, color='g', linestyle='dashed', label="Lower threshold")
     axhline(upper_threshold, linewidth=2, color='r', linestyle='dashed', label="Upper threshold")
     legend(loc='best')
@@ -115,6 +119,7 @@ def _set_plot_info(tmin, tmax, ymin, ymax, XLABEL, YLABEL, TITLE):
         YLABEL:             A string with the label on the y-axis.
         TITLE:              A string with the title off the plot.
     """
+    
     axis([tmin, tmax, ymin, ymax])
     xlabel(XLABEL)
     ylabel(YLABEL)
@@ -128,6 +133,7 @@ def _show_and_save(show_image, SAVEFIG):
         show_image:         A bool determining if the image should be shown on screen.
         SAVEFIG:            A filename to save plot to.
     """
+    
     if SAVEFIG:
         savefig(SAVEFIG)
     if show_image:
