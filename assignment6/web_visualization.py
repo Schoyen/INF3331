@@ -1,6 +1,6 @@
 from io import BytesIO
 from base64 import b64encode
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 from temperature_CO2_plotter import plot_CO2, plot_temperature, plot_CO2_emissions_per_country
 from matplotlib.pylab import clf
 web_app = Flask(__name__)
